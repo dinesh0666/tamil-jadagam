@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>இன்றைய தமிழ் பஞ்சாங்கம் | Tamil Panchangam Today 2026</title>
+  <meta name="description" content="இன்றைய தமிழ் பஞ்சாங்கம் — நட்சத்திரம், திதி, யோகம், இராகு காலம், நல்ல நேரம். Browse any date's Tamil calendar with Nakshatra, Tithi, Rahu Kalam and more.">
+  <meta name="keywords" content="tamil panchangam, tamil calendar today, nalla neram, rahu kalam, nakshatra today, tithi today, தமிழ் பஞ்சாங்கம், இன்றைய நட்சத்திரம்">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://jathagam.app/panchangam.html">
+  <meta property="og:title" content="Tamil Panchangam Today | தமிழ் பஞ்சாங்கம்">
+  <meta property="og:description" content="Today's Tamil Panchangam — Nakshatra, Tithi, Yogam, Rahu Kalam, Nalla Neram. Browse any date.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jathagam.app/panchangam.html">
+  <meta property="og:image" content="/assets/og-panchangam.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#B8471B">
+
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Tamil Panchangam — Daily Auspicious Timings",
+    "url": "https://jathagam.app/panchangam.html",
+    "description": "Free Tamil Panchangam for any date — Nakshatra, Tithi, Yogam, Rahu Kalam, Nalla Neram, Chandrashtamam",
+    "inLanguage": "ta",
+    "about": {
+      "@type": "Thing",
+      "name": "Panchangam",
+      "alternateName": ["Tamil Calendar", "தமிழ் பஞ்சாங்கம்", "நாட்காட்டி"]
+    },
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": "Tamil Panchangam Calculator",
+      "applicationCategory": "Lifestyle",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+  }
+  </script>
+</head>
+<body lang="ta">
+
+<!-- ── Skip navigation (accessibility) ───────────────────────────────── -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────── -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-brand">Jathagam ✦</a>
+  <div class="nav-actions">
+    <a href="panchangam.html" class="nav-btn" style="background:var(--primary);color:#fff;font-weight:600">📅 பஞ்சாங்கம்</a>
+    <a href="index.html" class="nav-btn">ஜாதகம்</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────── -->
+<header class="hero" style="padding:2rem 0 1.5rem" role="banner">
+  <div class="hero-content container">
+    <div class="hero-badge">✦ தினசரி தமிழ் பஞ்சாங்கம் ✦</div>
+    <h1 style="font-size:clamp(1.6rem,4vw,2.5rem);margin:.5rem 0 .25rem">
+      தமிழ் பஞ்சாங்கம்
+    </h1>
+    <p class="hero-subtitle">நட்சத்திரம் · திதி · யோகம் · இராகு காலம் · நல்ல நேரம்</p>
+  </div>
+</header>
+
+<!-- ── Main content ────────────────────────────────────────────────────── -->
+<main class="container" id="main-content" style="padding-bottom:3rem">
+
+  <!-- Calendar + Detail layout -->
+  <div class="panch-layout">
+
+    <!-- ── Left: Month Calendar ────────────────────────────────────── -->
+    <section class="panch-cal-section" aria-label="Monthly calendar">
+
+      <!-- Month navigation -->
+      <div class="panch-cal-nav">
+        <button class="panch-nav-btn" onclick="prevMonth()" aria-label="Previous month">‹</button>
+        <h2 id="calTitle" style="font-size:1.05rem;font-weight:700;color:var(--dark)">ஏப்ரல் 2026</h2>
+        <button class="panch-nav-btn" onclick="nextMonth()" aria-label="Next month">›</button>
+      </div>
+
+      <!-- Weekday headers -->
+      <div class="panch-cal-weekdays" aria-hidden="true">
+        <span>ஞா</span><span>தி</span><span>செ</span><span>பு</span>
+        <span>வி</span><span>வெ</span><span>ச</span>
+      </div>
+
+      <!-- Date grid (rendered by JS) -->
+      <div id="calGrid" class="panch-cal-grid" role="grid" aria-label="Calendar dates"></div>
+
+      <div style="text-align:center;margin-top:.75rem">
+        <button onclick="goToday()" class="nav-btn" style="font-size:.82rem;padding:.35rem .9rem">
+          📅 இன்று
+        </button>
+      </div>
+
+      <!-- Legend -->
+      <div class="panch-legend">
+        <span class="panch-legend-today"></span> இன்று &nbsp;
+        <span class="panch-legend-sel"></span> தேர்ந்தெடுக்கப்பட்டது<br>
+        🌕 பௌர்ணமி &nbsp; 🌑 அமாவாசை &nbsp; ✶ முகூர்த்தம்
+      </div>
+
+    </section>
+
+    <!-- ── Right: Panchangam Detail ────────────────────────────────── -->
+    <section class="panch-detail-section" id="panchDetail" aria-label="Panchangam details" aria-live="polite">
+      <div class="panch-loading">கணிக்கிறோம்…</div>
+    </section>
+
+  </div><!-- end .panch-layout -->
+
+  <!-- ── Info card ──────────────────────────────────────────────────── -->
+  <div class="card fade-in-2" style="margin-top:2rem;font-size:.87rem;color:var(--mid)">
+    <strong>ℹ️ குறிப்பு:</strong> இந்த பஞ்சாங்கம் சென்னை (IST UTC+5:30) நேரத்தை அடிப்படையாக கொண்டு கணக்கிடப்படுகிறது.
+    இராகு காலம், நல்ல நேரம் உங்கள் ஊரின் சூரிய உதய நேரத்தை பொருத்து சிறிது மாறலாம்.
+    <strong>Note:</strong> Times are for Chennai (IST). Adjust Rahu Kalam ~15 min per degree of longitude from 80°E.
+  </div>
+
+  <!-- ── CTA to Jathagam ────────────────────────────────────────────── -->
+  <div style="text-align:center;margin-top:2rem">
+    <a href="index.html" class="submit-btn" style="display:inline-block;max-width:340px;text-decoration:none">
+      உங்கள் ஜாதகம் (Birth Chart) பெறுக ✦
+    </a>
+    <p style="font-size:.82rem;color:var(--mid);margin-top:.5rem">
+      Rasi chart, Dasha, Dosha — all free in Tamil, English, Hindi, Telugu
+    </p>
+  </div>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <h4>Jathagam ✦</h4>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
+      <a href="/index.html">ஜாதகம்</a>
+      <a href="/panchangam.html">தமிழ் பஞ்சாங்கம்</a>
+      <a href="/blog/jathagam-tamil.html">Jathagam in Tamil</a>
+      <a href="/blog/tamil-jathagam-free.html">Free Tamil Jathagam</a>
+      <a href="/blog/rasi-chart-online.html">Rasi Chart Online</a>
+    </div>
+    <div class="footer-copy">© 2026 Jathagam.app · Lahiri Ayanamsa · VSOP87 accuracy</div>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ── Scripts (deferred for performance) ────────────────────────────── -->
+<script src="astro.js" defer></script>
+<script src="panchangam.js" defer></script>
+<script defer>
+/* ── State ──────────────────────────────────────────────────────────── */
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth(); // 0-based
+let selectedDate = new Date();
+selectedDate.setHours(0,0,0,0);
+
+const MONTHS_TA = ['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்',
+                   'ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'];
+
+/* ── Init ───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  // Scripts are deferred — wait for astro.js + panchangam.js
+  setTimeout(init, 0);
+});
+
+function init() {
+  renderCalendar(calYear, calMonth);
+  renderDetail(Panchangam.calculate(selectedDate));
+}
+
+/* ── Calendar rendering ─────────────────────────────────────────────── */
+function renderCalendar(year, month) {
+  document.getElementById('calTitle').textContent = `${MONTHS_TA[month]} ${year}`;
+  const grid    = document.getElementById('calGrid');
+  const today   = new Date(); today.setHours(0,0,0,0);
+  const firstDow = new Date(year, month, 1).getDay();
+  const days     = new Date(year, month + 1, 0).getDate();
+
+  let html = '';
+  // Leading empty cells
+  for (let i = 0; i < firstDow; i++) {
+    html += '<div class="pdc-empty" aria-hidden="true"></div>';
+  }
+  // Day cells
+  for (let day = 1; day <= days; day++) {
+    const d     = new Date(year, month, day);
+    // Tamil solar date + special day flags
+    const flags = Panchangam.getDayFlags(year, month + 1, day);
+    const jd    = toJD(year, month + 1, day, 0.5);
+    const ayan  = getLahiriAyanamsa(jd);
+    const sun   = norm360(getSunLon(jd) - ayan);
+    const td    = Math.floor(sun % 30) + 1;
+
+    const isToday = d.toDateString() === today.toDateString();
+    const isSel   = d.toDateString() === selectedDate.toDateString();
+    const cls = `panch-day-cell${isToday ? ' today' : ''}${isSel ? ' selected' : ''}`;
+    const ariaExtra = flags.isPournami ? ', பௌர்ணமி' : flags.isAmavasai ? ', அமாவாசை' : flags.isMuhurat ? ', முகூர்த்த நாள்' : '';
+
+    html += `<div class="${cls}" role="button" tabindex="0"
+      aria-label="${day}வது, தமிழ் தேதி ${td}${ariaExtra}"
+      aria-pressed="${isSel}"
+      onclick="selectDate(${year},${month},${day})"
+      onkeydown="if(event.key==='Enter')selectDate(${year},${month},${day})">
+      <span class="pdc-greg">${day}</span>
+      <span class="pdc-tamil">${td}</span>
+      ${flags.isPournami ? '<span class="pdc-badge pdc-badge-full" title="பௌர்ணமி — Full Moon">🌕</span>' : ''}
+      ${flags.isAmavasai ? '<span class="pdc-badge pdc-badge-new" title="அமாவாசை — New Moon">🌑</span>' : ''}
+      ${flags.isMuhurat  ? '<span class="pdc-badge pdc-badge-muh" title="முகூர்த்த நாள் — Auspicious">✶</span>' : ''}
+    </div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectDate(y, m, d) {
+  selectedDate = new Date(y, m, d);
+  renderCalendar(calYear, calMonth);
+  renderDetail(Panchangam.calculate(selectedDate));
+  document.getElementById('panchDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function prevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar(calYear, calMonth);
+}
+function nextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar(calYear, calMonth);
+}
+function goToday() {
+  const t = new Date(); t.setHours(0,0,0,0);
+  calYear  = t.getFullYear();
+  calMonth = t.getMonth();
+  selectedDate = t;
+  renderCalendar(calYear, calMonth);
+  renderDetail(Panchangam.calculate(selectedDate));
+}
+
+/* ── Detail rendering ───────────────────────────────────────────────── */
+function renderDetail(d) {
+  const el = document.getElementById('panchDetail');
+  const gregDate = d.date.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  el.innerHTML = `
+    <!-- Date hero card -->
+    <div class="panch-date-hero">
+      <div class="panch-date-planet">${d.vaaramPlanet}</div>
+      <div>
+        <div class="panch-date-vaaram">${d.vaaram}</div>
+        <div class="panch-date-greg">${gregDate}</div>
+      </div>
+      <div class="panch-date-tamil-badge">
+        <span class="panch-year-name">${d.tamilYear}</span>
+        <span class="panch-month-date">${d.tamilMonth} ${d.tamilDate}</span>
+      </div>
+    </div>
+
+    <!-- Calendar meta row: day number, Shaka, Islamic -->
+    <div class="panch-day-meta">
+      <span>📅 நாள் ${d.dayInfo.dayNo} / ${d.dayInfo.daysLeft}</span>
+      <span>🏹 சக ${d.shaka.year} ${d.shaka.month} ${d.shaka.day}</span>
+      <span>☄️ ${d.hijri.monthName} ${d.hijri.day}, ${d.hijri.year}</span>
+    </div>
+
+    ${d.isPournami ? '<div class="panch-special-day special-pournami">🌕 <strong>பௌர்ணமி</strong> — Full Moon Day. Fasting (விரதம்), prayers &amp; charity are especially auspicious today.</div>' : ''}
+    ${d.isAmavasai ? '<div class="panch-special-day special-amavasai">🌑 <strong>அமாவாசை</strong> — New Moon Day. Tarpan (தர்ப்பணம்) for ancestors. Avoid new beginnings today.</div>' : ''}
+    ${d.isMuhurat  ? '<div class="panch-special-day special-muhurat">✶ <strong>முகூர்த்த நாள்</strong> — Auspicious day for weddings, housewarming (கிரஹப்பிரவேசம்) &amp; new ventures.</div>' : ''}
+
+    <!-- Pancha Angas (5 limbs) -->
+    <h3 class="panch-section-title">பஞ்சாங்கம் — ஐந்து அங்கங்கள்</h3>
+    <div class="panch-five-grid">
+      <div class="panch-five-item">
+        <div class="pfi-icon" aria-hidden="true">⭐</div>
+        <div class="pfi-label">நட்சத்திரம்</div>
+        <div class="pfi-value">${d.nakshatra}</div>
+        <div class="pfi-sub">பாதம் ${d.nakPada}</div>
+      </div>
+      <div class="panch-five-item">
+        <div class="pfi-icon" aria-hidden="true">☽</div>
+        <div class="pfi-label">திதி</div>
+        <div class="pfi-value">${d.tithi}</div>
+        <div class="pfi-sub">${d.paksha}</div>
+      </div>
+      <div class="panch-five-item">
+        <div class="pfi-icon" aria-hidden="true">✦</div>
+        <div class="pfi-label">யோகம்</div>
+        <div class="pfi-value">${d.yogam}</div>
+        <div class="pfi-sub">&nbsp;</div>
+      </div>
+      <div class="panch-five-item">
+        <div class="pfi-icon" aria-hidden="true">◐</div>
+        <div class="pfi-label">கரணம்</div>
+        <div class="pfi-value">${d.karanam}</div>
+        <div class="pfi-sub">&nbsp;</div>
+      </div>
+      <div class="panch-five-item">
+        <div class="pfi-icon" aria-hidden="true">${d.vaaramPlanet}</div>
+        <div class="pfi-label">வாரம்</div>
+        <div class="pfi-value">${d.vaaram}</div>
+        <div class="pfi-sub">சூலம்: ${d.soolam}</div>
+      </div>
+    </div>
+
+    <!-- Good times -->
+    <h3 class="panch-section-title">நல்ல நேரம்</h3>
+    <div class="panch-times-grid">
+      <div class="panch-time-card good">
+        <div class="ptc-icon" aria-hidden="true">✅</div>
+        <div class="ptc-label">நல்ல நேரம்</div>
+        <div class="ptc-value">${d.nallaNeram}</div>
+      </div>
+      <div class="panch-time-card good">
+        <div class="ptc-icon" aria-hidden="true">🌸</div>
+        <div class="ptc-label">கௌரி நல்ல நேரம்</div>
+        <div class="ptc-value">${d.gowriNeram}</div>
+      </div>
+      <div class="panch-time-card info">
+        <div class="ptc-icon" aria-hidden="true">🌅</div>
+        <div class="ptc-label">சூரிய உதயம்</div>
+        <div class="ptc-value">${d.sunrise}</div>
+      </div>
+      <div class="panch-time-card info">
+        <div class="ptc-icon" aria-hidden="true">🌇</div>
+        <div class="ptc-label">சூரிய அஸ்தமனம்</div>
+        <div class="ptc-value">${d.sunset}</div>
+      </div>
+    </div>
+
+    <!-- Bad times -->
+    <h3 class="panch-section-title">தவிர்க்க வேண்டிய நேரம்</h3>
+    <div class="panch-times-grid">
+      <div class="panch-time-card bad">
+        <div class="ptc-icon" aria-hidden="true">⛔</div>
+        <div class="ptc-label">இராகு காலம்</div>
+        <div class="ptc-value">${d.rahuKalam}</div>
+      </div>
+      <div class="panch-time-card bad">
+        <div class="ptc-icon" aria-hidden="true">⛔</div>
+        <div class="ptc-label">எமகண்டம்</div>
+        <div class="ptc-value">${d.emaGanda}</div>
+      </div>
+      <div class="panch-time-card warn">
+        <div class="ptc-icon" aria-hidden="true">⚠️</div>
+        <div class="ptc-label">குளிகை</div>
+        <div class="ptc-value">${d.kuligai}</div>
+      </div>
+    </div>
+
+    <!-- Chandrashtamam -->
+    <div class="panch-chandrastam">
+      <span class="ptc-icon" aria-hidden="true">🌑</span>
+      <div>
+        <strong>சந்திராஷ்டமம்:</strong> <strong>${d.chandrashtamam} ராசியினருக்கு</strong><br>
+        <span style="font-size:.78rem;opacity:.8">நட்சத்திரம்: ${d.chandrashtamamNak} — புதிய தொடக்கங்களை தவிர்க்கவும்</span>
+      </div>
+    </div>
+
+    <!-- Rasi Palan -->
+    <h3 class="panch-section-title">📊 இன்றைய ராசிபலன்</h3>
+    <div class="panch-rasi-grid">
+      ${d.rasiPalan.map(r => `<div class="panch-rasi-item type-${r.type}"><span class="pri-rasi">${r.rasi}</span><span class="pri-word">${r.word}</span></div>`).join('')}
+    </div>
+    <p class="panch-rasi-note">★ சந்திர பல (சுக்லம், க௃ஷ்ணம்) அடிப்படையில் கணக்கிட்டது ★</p>
+
+    <!-- Share button -->
+    <div style="margin-top:1.25rem;display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="nav-btn" onclick="shareToday()" style="background:var(--good);color:#fff;padding:.55rem 1.25rem">
+        📲 WhatsApp-ல் பகிர்
+      </button>
+      <button class="nav-btn" onclick="copyLink()" style="padding:.55rem 1.25rem">
+        🔗 Link Copy
+      </button>
+    </div>
+  `;
+}
+
+/* ── Share helpers ───────────────────────────────────────────────────── */
+function shareToday() {
+  const d = Panchangam.calculate(selectedDate);
+  const text = `📅 ${d.vaaram} — ${selectedDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}
+✦ தமிழ் தேதி: ${d.tamilYear} ${d.tamilMonth} ${d.tamilDate}
+⭐ நட்சத்திரம்: ${d.nakshatra} (பாதம் ${d.nakPada})
+☽ திதி: ${d.paksha.split(' ')[0]} ${d.tithi}
+✅ நல்ல நேரம்: ${d.nallaNeram}
+⛔ இராகு காலம்: ${d.rahuKalam}
+
+மேலும் பஞ்சாங்கம் → https://jathagam.app/panchangam.html`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+}
+
+function copyLink() {
+  const url = window.location.origin + '/panchangam.html?date=' + selectedDate.toISOString().slice(0,10);
+  navigator.clipboard.writeText(url).then(() => {
+    const t = document.getElementById('toast');
+    t.textContent = '✓ Link copied!';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  });
+}
+</script>
+
+</body>
+</html>

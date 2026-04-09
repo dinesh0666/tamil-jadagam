@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jathagam — Your Vedic Birth Chart | ஜாதகம்</title>
+  <meta name="description" content="Your complete Vedic birth chart — Rasi, Navamsa, Dasha, Dosha, Nakshatra and Ashtakavarga. Generated in Tamil, English, Hindi, Telugu.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#B8471B">
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body lang="ta">
+
+<!-- ── Skip navigation (accessibility) ───────────────────────────────── -->
+<a href="#chart-area" class="skip-link">Skip to chart</a>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────── -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-brand">Jathagam ✦</a>
+  <div class="nav-actions">
+    <a href="panchangam.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Tamil Panchangam">📅</a>
+    <button class="lang-btn active" data-lang="ta" onclick="setLanguage('ta')" aria-label="Tamil">தமிழ்</button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
+    <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')" aria-label="Hindi">हि</button>
+    <button class="lang-btn" data-lang="te" onclick="setLanguage('te')" aria-label="Telugu">తె</button>
+    <button class="nav-btn" onclick="window.print()" aria-label="Print chart">🖨 Print</button>
+    <button class="nav-btn" id="shareNavBtn" onclick="window.Share&&Share._openShareModal()" aria-label="Share chart">🔗 Share</button>
+    <button class="nav-btn" style="background:var(--gold);color:var(--dark);font-weight:700" onclick="window.Payment&&Payment.initPayment()" id="premiumNavBtn" aria-label="Unlock premium features">🔓 ₹99</button>
+  </div>
+</nav>
+
+<!-- ── Chart header banner ─────────────────────────────────────────────── -->
+<div class="chart-banner" id="chartBanner">
+  <div class="loading-wrap">
+    <div class="loader"></div>
+    <p>கணக்கிடுகிறோம்… Calculating your chart…</p>
+  </div>
+</div>
+
+<!-- ── Section tab navigation (sticky) ───────────────────────────────── -->
+<div class="tab-nav-wrap" id="tabNavWrap" style="display:none">
+  <div class="tab-nav-inner container">
+    <button class="tab-item active" data-target="charts-section">
+      <span class="tab-icon">♈</span>
+      <span data-i18n="tabs.rasiChart">ராசி சட்டம்</span>
+    </button>
+    <button class="tab-item" data-target="planet-section">
+      <span class="tab-icon">☀</span>
+      <span data-i18n="tabs.planets">கிரகங்கள்</span>
+    </button>
+    <button class="tab-item" data-target="nak-section">
+      <span class="tab-icon">⭐</span>
+      <span data-i18n="tabs.nakshatra">நட்சத்திரம்</span>
+    </button>
+    <button class="tab-item" data-target="dasha-section">
+      <span class="tab-icon">⏳</span>
+      <span data-i18n="tabs.dasha">தசை</span>
+    </button>
+    <button class="tab-item" data-target="dosha-section">
+      <span class="tab-icon">⚡</span>
+      <span data-i18n="tabs.dosha">தோஷம்</span>
+    </button>
+    <button class="tab-item" data-target="ashtak-section">
+      <span class="tab-icon">📊</span>
+      <span data-i18n="tabs.ashtak">அஷ்டகவர்க்கம்</span>
+    </button>
+    <button class="tab-item" data-target="share-section">
+      <span class="tab-icon">🔗</span>
+      <span data-i18n="tabs.share">பகிர்</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── Birth summary card ────────────────────────────────────────────── -->
+<div class="container" id="birthSummaryWrap" style="display:none">
+  <div class="birth-summary fade-in" id="birthSummary"></div>
+</div>
+
+<!-- ── Main content ────────────────────────────────────────────────────── -->
+<main class="container" id="chart-area">
+
+  <!-- Ad slot top -->
+  <div class="ad-slot" id="ad-top" style="display:none">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- ── Rasi + Navamsa charts ─────────────────────────────────────────── -->
+  <section class="section" id="charts-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">♈</span> <span data-i18n="sections.rasiChart">ராசி சட்டம்</span></h2>
+      <a href="index.html" style="font-size:.8rem;color:var(--muted)">✏ Edit</a>
+    </div>
+    <div class="charts-grid fade-in">
+      <div class="chart-box">
+        <h3 data-i18n="sections.rasiChart">Rasi Chart</h3>
+        <div id="rasiChartContainer"></div>
+      </div>
+      <div class="chart-box" id="navamsaBox">
+        <h3 data-i18n="sections.navamsaChart">Navamsa Chart (D9)
+          <span style="font-size:.65rem;color:var(--gold-d);margin-left:.4rem;font-family:sans-serif">Premium</span>
+        </h3>
+        <div id="navamsaChartContainer"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Planet table ──────────────────────────────────────────────────── -->
+  <section class="section section-card fade-in-2" id="planet-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">☀</span> <span data-i18n="sections.planetTable">கிரக நிலைகள்</span></h2>
+    </div>
+    <div id="planetTableContainer"></div>
+  </section>
+
+  <!-- ── Nakshatra ─────────────────────────────────────────────────────── -->
+  <section class="section section-card fade-in-2" id="nak-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">⭐</span> <span data-i18n="sections.nakDetails">நட்சத்திர விவரம்</span></h2>
+    </div>
+    <div id="nakContainer"></div>
+  </section>
+
+  <!-- Ad slot mid -->
+  <div class="ad-slot" id="ad-mid" style="display:none">
+    <ins class="adsbygoogle"
+         style="display:block;text-align:center"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- ── Dasha ─────────────────────────────────────────────────────────── -->
+  <section class="section section-card fade-in-3" id="dasha-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">⏳</span> <span data-i18n="sections.dashaTitle">விம்சோத்தரி தசை</span></h2>
+      <span class="badge">Vimshottari</span>
+    </div>
+    <div id="dashaContainer"></div>
+  </section>
+
+  <!-- ── Dosha ─────────────────────────────────────────────────────────── -->
+  <section class="section section-card fade-in-3" id="dosha-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">⚡</span> <span data-i18n="sections.doshaTitle">தோஷ பகுப்பாய்வு</span></h2>
+    </div>
+    <div id="doshaContainer"></div>
+  </section>
+
+  <!-- ── Ashtakavarga (Premium) ────────────────────────────────────────── -->
+  <section class="section section-card fade-in-4" id="ashtak-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">📊</span> <span data-i18n="sections.ashtakavargaTitle">அஷ்டகவர்க்கம்</span></h2>
+      <span class="badge" style="background:var(--gold-l);color:var(--gold-d)">🔓 Premium</span>
+    </div>
+    <div id="ashtakContainer"></div>
+  </section>
+
+  <!-- Ad slot bottom -->
+  <div class="ad-slot" id="ad-bottom" style="display:none">
+    <ins class="adsbygoogle"
+         style="display:block;text-align:center"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- ── Share panel ───────────────────────────────────────────────────── -->
+  <section class="section section-card fade-in-4" id="share-section" style="display:none">
+    <div class="section-header">
+      <h2><span class="tab-icon">🔗</span> <span data-i18n="sections.shareTitle">பகிர்</span></h2>
+    </div>
+    <div id="shareContainer"></div>
+  </section>
+
+  <!-- ── Edit link ─────────────────────────────────────────────────────── -->
+  <div class="text-center mt-2 mb-2" id="edit-section" style="display:none">
+    <a href="index.html" style="font-size:.85rem;color:var(--mid)">← புதிய ஜாதகம் / New Chart</a>
+  </div>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <h4>Jathagam ✦</h4>
+    <div class="footer-cities">
+      <a href="index.html">Chennai</a> <a href="index.html">Mumbai</a>
+      <a href="index.html">Delhi</a> <a href="index.html">Bangalore</a>
+      <a href="index.html">Hyderabad</a> <a href="index.html">Singapore</a>
+      <a href="index.html">Dubai</a> <a href="index.html">London</a>
+      <a href="index.html">Toronto</a> <a href="index.html">New York</a>
+    </div>
+    <div class="footer-copy">© 2026 Jathagam.app · Lahiri Ayanamsa · உங்கள் தரவு எங்கும் சேமிக்கப்படாது</div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<!-- ── External CDN scripts ────────────────────────────────────────────── -->
+<!-- LZString for URL compression -->
+<script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+<!-- html2canvas for PNG export -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- html2pdf for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- ── App scripts (order matters) ──────────────────────────────────────── -->
+<script src="i18n.js"></script>
+<script src="astro.js"></script>
+<script src="charts.js"></script>
+<script src="dasha.js"></script>
+<script src="dosha.js"></script>
+<script src="share.js"></script>
+<script src="payment.js"></script>
+<script src="pdf.js"></script>
+
+<script>
+/* ── Main chart page controller ───────────────────────────────────────── */
+'use strict';
+
+let _chartData = null;
+
+/* ── Tab navigation ────────────────────────────────────────────────────── */
+function initTabs() {
+  const tabItems = document.querySelectorAll('.tab-item');
+
+  // Update tab labels from i18n
+  tabItems.forEach(tab => {
+    const key = `tabs.${tab.dataset.i18nKey || tab.dataset.target?.replace('-section','')}`;
+    const span = tab.querySelector('span[data-i18n]');
+    if (span) {
+      const val = t(span.dataset.i18n);
+      if (val && val !== span.dataset.i18n) span.textContent = val;
+    }
+    tab.addEventListener('click', () => {
+      const target = document.getElementById(tab.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      tabItems.forEach(t2 => t2.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Scroll spy — highlight active tab based on scroll position
+  const sections = document.querySelectorAll('.section[id]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tabItems.forEach(t2 => t2.classList.remove('active'));
+        const activeTab = document.querySelector(`.tab-item[data-target="${id}"]`);
+        if (activeTab) activeTab.classList.add('active');
+      }
+    });
+  }, { threshold: 0.25, rootMargin: '-100px 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+}
+
+/* ── Birth summary card ─────────────────────────────────────────────────── */
+function renderBirthSummary(birthData, lagna, moonPlanet, sunPlanet, currentDasha) {
+  const wrap = document.getElementById('birthSummaryWrap');
+  const el   = document.getElementById('birthSummary');
+  if (!wrap || !el) return;
+
+  // Use i18n functions (from i18n.js loaded before this script)
+  const nakStr   = (moonPlanet && moonPlanet.nakIdx >= 0) ? nakName(moonPlanet.nakIdx) : '—';
+  const lagRasi  = lagna    ? rasiName(lagna.rasiNum)       : '—';
+  const moonRasi = moonPlanet ? rasiName(moonPlanet.rasiNum) : '—';
+  const sunRasi  = sunPlanet  ? rasiName(sunPlanet.rasiNum)  : '—';
+  const lankLord = moonPlanet ? planetName(moonPlanet.nakLord) : '—';
+
+  const dob = birthData.d
+    ? new Date(birthData.d + 'T00:00:00').toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'})
+    : '—';
+  const age = birthData.d
+    ? Math.floor((new Date() - new Date(birthData.d + 'T00:00:00')) / (365.25 * 24 * 3600 * 1000))
+    : '—';
+
+  const mahaLord  = currentDasha ? planetName(currentDasha.mahaLord)  : '—';
+  const antarLord = currentDasha ? planetName(currentDasha.antarLord) : '—';
+  const mahaEnd   = currentDasha ? Dasha.formatDate(currentDasha.mahaEnd) : '—';
+
+  const lagDeg = lagna ? `${lagna.degree.toFixed(1)}° ${lagRasi}` : '—';
+
+  const items = [
+    { label: t('form.nameLabel') || 'பெயர்',      value: birthData.n || '—',          cls: 'primary' },
+    { label: t('form.dobLabel')  || 'பிறந்த தேதி', value: `${dob} (${age}y)` },
+    { label: t('form.tobLabel')  || 'நேரம்',        value: birthData.t || '12:00' },
+    { label: t('form.pobLabel')  || 'ஊர்',         value: birthData.city || '—' },
+    { label: planetName('Lagna'),                   value: lagDeg,                       cls: 'primary' },
+    { label: planetName('Moon'),                    value: moonRasi },
+    { label: planetName('Sun'),                     value: sunRasi },
+    { label: t('table.nakshatra') || 'நட்சத்திரம்', value: `${nakStr} (${lankLord})`,   cls: 'gold' },
+    { label: t('dasha.mahadasha') || 'தசை',        value: `${mahaLord} → ${antarLord}`, cls: 'gold' },
+    { label: t('dasha.ends') || 'தசை முடிவு',      value: mahaEnd },
+  ];
+
+  el.innerHTML = items.map(it => `
+    <div class="bsum-item">
+      <div class="bsum-label">${it.label}</div>
+      <div class="bsum-value ${it.cls || ''}">${it.value}</div>
+    </div>`).join('');
+
+  wrap.style.display = '';
+}
+
+function renderChartPage() {
+  const params  = new URLSearchParams(window.location.search);
+  const encoded = params.get('d');
+  if (!encoded) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Decode birth data
+  let birthData;
+  try {
+    if (window.LZString) {
+      const dec = LZString.decompressFromEncodedURIComponent(encoded);
+      if (dec) birthData = JSON.parse(dec);
+    }
+    if (!birthData) {
+      birthData = JSON.parse(decodeURIComponent(atob(encoded)));
+    }
+  } catch (e) {
+    document.getElementById('chartBanner').innerHTML =
+      `<div class="banner-content"><div class="banner-name" style="color:var(--gold-l)">Invalid chart link</div><a href="index.html" style="color:var(--gold-l)">← Generate new chart</a></div>`;
+    return;
+  }
+
+  if (!birthData || !birthData.lat || !birthData.lon) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Apply language
+  setLanguage(birthData.l || currentLang);
+
+  // Parse birth datetime
+  const [year, month, day] = (birthData.d || '').split('-').map(Number);
+  const [hour, minute]     = (birthData.t || '12:00').split(':').map(Number);
+  const tz = parseFloat(birthData.tz || 5.5);
+
+  // Calculate
+  const chart = Astro.calculateBirthChart(year, month, day, hour, minute, birthData.lat, birthData.lon, tz);
+  const { lagna, planets, jd, ayanamsa } = chart;
+
+  // Navamsa
+  const planetsWithNavamsa = Astro.calculateNavamsa(planets, lagna.siderealLon);
+
+  // Dasha
+  const moonPlanet = planets.find(p => p.name === 'Moon');
+  const moonNakFraction = (moonPlanet.siderealLon % (360/27)) / (360/27);
+  const birthDate = new Date(year, month - 1, day, hour, minute);
+  const today     = new Date();
+  const mahadashas= Dasha.calculateMahadashas(moonPlanet.nakIdx, moonNakFraction, birthDate);
+  const currentDasha = Dasha.getCurrentDashaStatus(mahadashas, today);
+
+  // Dosha
+  const doshaResults = Dosha.runAllDoshaChecks(planets, lagna.rasiNum, birthDate, today);
+
+  // Ashtakavarga
+  const isPrem = window.Payment.isUnlocked();
+  const ashtak = Astro.calculateAshtakavarga(planets, lagna.rasiNum);
+
+  const sunP = planets.find(p => p.name === 'Sun') || {};
+
+  // Store globally for share
+  _chartData = {
+    name:      birthData.n,
+    dob:       birthData.d,
+    tob:       birthData.t,
+    city:      birthData.city,
+    lagnaRasi: lagna.rasiNum,
+    planets,
+    lagna,
+    currentDasha,
+    encoded,
+  };
+
+  // ── Render banner ──────────────────────────────────────────────────────
+  Charts.renderChartHeader(birthData.n, lagna.rasiNum, moonPlanet, sunP, currentDasha, 'chartBanner');
+
+  // Add print + share actions to banner
+  const banner = document.getElementById('chartBanner');
+  if (banner && !banner.querySelector('.banner-actions')) {
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'banner-actions';
+    actionsDiv.innerHTML = `
+      <button class="banner-action-btn" onclick="window.print()">🖨 Print</button>
+      <button class="banner-action-btn" onclick="Share._openShareModal()">🔗 Share</button>
+      <button class="banner-action-btn" onclick="Share.copyLink(window.location.href)">📋 Copy Link</button>
+      ${!isPrem ? `<button class="banner-action-btn gold" onclick="Payment.initPayment()">🔓 Unlock Premium ₹99</button>` : '<span class="banner-action-btn gold">✓ Premium Active</span>'}
+    `;
+    banner.appendChild(actionsDiv);
+  }
+
+  // Update page title
+  document.title = `${birthData.n} — Jathagam`;
+
+  // Show tab nav
+  const tabWrap = document.getElementById('tabNavWrap');
+  if (tabWrap) tabWrap.style.display = '';
+
+  // Show all hidden sections
+  const sections = ['charts-section','nak-section','planet-section','dasha-section','dosha-section','ashtak-section','share-section','edit-section','ad-top','ad-mid','ad-bottom'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = '';
+  });
+
+  // ── Birth summary ──────────────────────────────────────────────────────
+  renderBirthSummary(birthData, lagna, moonPlanet, sunP, currentDasha);
+
+  // ── Rasi chart ─────────────────────────────────────────────────────────
+  Charts.drawSouthIndianChart('rasiChartContainer', lagna.rasiNum, planets, birthData.n, t('sections.rasiChart') || 'RASI');
+
+  // ── Navamsa chart ──────────────────────────────────────────────────────
+  if (isPrem) {
+    Charts.drawSouthIndianChart('navamsaChartContainer', Astro.calculateNavamsa([lagna], lagna.siderealLon)[0].navamsaRasi, planetsWithNavamsa, birthData.n, 'NAVAMSA');
+  } else {
+    window.Payment.showPremiumLock('navamsaChartContainer', t('sections.navamsaChart') || 'Navamsa D9');
+  }
+
+  // ── Nakshatra ──────────────────────────────────────────────────────────
+  Charts.renderNakshtaraCard(moonPlanet, lagna.rasiNum, 'nakContainer');
+
+  // ── Planet table ───────────────────────────────────────────────────────
+  Charts.renderPlanetTable(planets, lagna, 'planetTableContainer');
+
+  // ── Dasha ──────────────────────────────────────────────────────────────
+  Dasha.renderDashaTimeline(mahadashas, currentDasha, 'dashaContainer', isPrem);
+
+  // ── Dosha ──────────────────────────────────────────────────────────────
+  Dosha.renderDoshaPanel(doshaResults, 'doshaContainer', isPrem);
+
+  // ── Ashtakavarga ───────────────────────────────────────────────────────
+  renderAshtakavarga(ashtak, lagna.rasiNum, isPrem);
+
+  // ── Share panel ────────────────────────────────────────────────────────
+  Share.renderSharePanel(_chartData, 'shareContainer', isPrem);
+
+  // ── Premium nav btn ────────────────────────────────────────────────────
+  if (isPrem) {
+    const premBtn = document.getElementById('premiumNavBtn');
+    if (premBtn) { premBtn.textContent = '✓ Premium'; premBtn.disabled = true; premBtn.style.opacity = '.6'; }
+  }
+
+  // ── Init tabs after render ─────────────────────────────────────────────
+  initTabs();
+}
+
+/* ── Ashtakavarga table ───────────────────────────────────────────────── */
+function renderAshtakavarga(ashtak, lagnaRasi, isPrem) {
+  const container = document.getElementById('ashtakContainer');
+  if (!container) return;
+
+  const pNames = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  const rasisEn = Astro.RASI_NAMES_EN;
+
+  function buildTable() {
+    const table = document.createElement('table');
+    table.className = 'ashtak-table';
+
+    // Header
+    const thead = document.createElement('thead');
+    const hrow  = document.createElement('tr');
+    hrow.innerHTML = `<th>Planet</th>` + rasisEn.map(r => `<th>${r.slice(0,3)}</th>`).join('') + `<th>Total</th>`;
+    thead.appendChild(hrow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    pNames.forEach(p => {
+      const row = ashtak.matrix[p] || new Array(12).fill(0);
+      const total = row.reduce((a,b)=>a+b,0);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="text-align:left;font-weight:600">${planetName(p)}</td>` +
+        row.map(v => `<td class="${v >= 5 ? 'high' : v <= 2 ? 'low' : ''}">${v}</td>`).join('') +
+        `<td class="fw-bold">${total}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Totals row
+    const tfoot = document.createElement('tfoot');
+    const trow  = document.createElement('tr');
+    trow.innerHTML = `<td style="text-align:left;font-weight:700">Total</td>` +
+      ashtak.totals.map(v => `<td>${v}</td>`).join('') +
+      `<td class="fw-bold">${ashtak.totals.reduce((a,b)=>a+b,0)}</td>`;
+    tfoot.appendChild(trow);
+    table.appendChild(tfoot);
+    return table;
+  }
+
+  container.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.style.overflowX = 'auto';
+  wrap.appendChild(buildTable());
+  container.appendChild(wrap);
+
+  if (!isPrem) {
+    window.Payment.showPremiumLock('ashtakContainer', t('sections.ashtakavargaTitle'));
+  }
+}
+
+/* ── Share modal helper ───────────────────────────────────────────────── */
+Share._openShareModal = function() {
+  const s = document.getElementById('share-section');
+  if (s) s.scrollIntoView({ behavior:'smooth' });
+};
+
+/* ── Init on load ─────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', renderChartPage);
+
+// Expose for payment re-render
+window.renderChartPage = renderChartPage;
+</script>
+</body>
+</html>
