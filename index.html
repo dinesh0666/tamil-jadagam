@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jathagam — Free Tamil Birth Chart Online | ஜாதகம் | Panchangam</title>
+  <meta name="description" content="உங்கள் இலவச தமிழ் ஜாதகம் (birth chart) உடனே பெறுங்கள். Rasi chart, Nakshatra, Vimshottari Dasha, Dosha — Tamil, English, Hindi, Telugu. Also: daily Tamil Panchangam.">
+  <meta name="keywords" content="jathagam, tamil jathagam, birth chart, rasi chart, nakshatra, dasha, Vedic astrology, kundali, tamil panchangam, nalla neram, rahu kalam">
+  <meta property="og:title" content="Jathagam — Free Tamil Birth Chart & Panchangam">
+  <meta property="og:description" content="Free Tamil Jathagam + daily Panchangam. Rasi chart, Dasha, Nakshatra, Rahu Kalam — all in Tamil, English, Hindi, Telugu.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jathagam.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://jathagam.app/">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#B8471B">
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Jathagam",
+    "url": "https://jathagam.app",
+    "description": "Free Tamil birth chart (Jathagam) calculator with Rasi, Navamsa, Dasha, and Dosha analysis",
+    "applicationCategory": "Lifestyle",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
+</head>
+<body lang="ta">
+
+<!-- ── Skip navigation (accessibility) ──────────────────────────────── -->
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────── -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-brand">Jathagam ✶</a>
+  <div class="nav-actions">
+    <a href="panchangam.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Tamil Panchangam">📅 பஞ்சாங்கம்</a>
+    <button class="lang-btn active" data-lang="ta" onclick="setLanguage('ta')" aria-label="Tamil!">தமிழ்</button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
+    <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')" aria-label="Hindi">हि</button>
+    <button class="lang-btn" data-lang="te" onclick="setLanguage('te')" aria-label="Telugu">తె</button>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content container">
+    <div class="hero-badge">✦ வேத ஜோதிடம் · Vedic Jyotish ✦</div>
+    <h1 data-i18n="appName">ஜாதகம்</h1>
+    <p class="hero-subtitle" data-i18n="tagline">உங்கள் முழுமையான வேத ஜனன ஜாதகம்</p>
+    <div class="hero-features">
+      <span class="hero-chip">♈ ராசி சட்டம்</span>
+      <span class="hero-chip">⭐ நட்சத்திரம்</span>
+      <span class="hero-chip">⏳ விம்சோத்தரி தசை</span>
+      <span class="hero-chip">⚡ தோஷம்</span>
+      <span class="hero-chip">🆓 இலவசம்</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Birth Data Form + Side info ────────────────────────────────────── -->
+<main id="main">
+  <div class="form-page-wrap">
+
+    <!-- Left: Form -->
+    <div class="form-card card fade-in" id="form-card">
+    <form id="birthForm" onsubmit="handleFormSubmit(event)" novalidate>
+      <div class="form-grid">
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" data-i18n="form.nameLabel">முழு பெயர்</label>
+          <input type="text" id="name" name="name" class="form-control"
+                 data-i18n-ph="form.namePlaceholder"
+                 placeholder="உங்கள் பெயரை உள்ளிடவும்"
+                 required autocomplete="name" maxlength="80">
+        </div>
+
+        <!-- DOB + TOB row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dob" data-i18n="form.dobLabel">பிறந்த தேதி</label>
+            <input type="date" id="dob" name="dob" class="form-control" required
+                   max="2026-12-31" min="1900-01-01">
+          </div>
+          <div class="form-group">
+            <label for="tob" data-i18n="form.tobLabel">பிறந்த நேரம்</label>
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <input type="time" id="tob" name="tob" class="form-control" value="12:00">
+              <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;white-space:nowrap;cursor:pointer;color:var(--mid)">
+                <input type="checkbox" id="unknownTime" onchange="toggleUnknownTime(this)">
+                <span data-i18n="form.unknownTime">நேரம் தெரியாது</span>
+              </label>
+            </div>
+            <div id="unknownTimeNote" style="display:none;font-size:.75rem;color:var(--warn)" data-i18n="form.unknownTimeNote">
+              மதிய 12:00 பயன்படுத்துவோம். லக்கினம் சரியாக இருக்காது.
+            </div>
+          </div>
+        </div>
+
+        <!-- Birth Place with autocomplete -->
+        <div class="form-group">
+          <label for="pob" data-i18n="form.pobLabel">பிறந்த ஊர்</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="pob" name="pob" class="form-control"
+                   data-i18n-ph="form.pobPlaceholder"
+                   placeholder="நகர பெயரை தட்டச்சு செய்யவும்…"
+                   autocomplete="off" required>
+            <input type="hidden" id="lat" name="lat">
+            <input type="hidden" id="lon" name="lon">
+            <input type="hidden" id="tz"  name="tz">
+            <div id="cityDropdown" class="autocomplete-list"></div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label data-i18n="form.genderLabel">பாலினம்</label>
+          <div class="gender-group">
+            <button type="button" class="gender-btn active" data-gender="M" onclick="selectGender(this)" data-i18n="form.male">ஆண்</button>
+            <button type="button" class="gender-btn"        data-gender="F" onclick="selectGender(this)" data-i18n="form.female">பெண்</button>
+            <button type="button" class="gender-btn"        data-gender="O" onclick="selectGender(this)" data-i18n="form.other">மற்றவை</button>
+          </div>
+          <input type="hidden" id="gender" value="M">
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn" data-i18n="form.submitBtn">
+          ஜாதகம் உருவாக்கு ✦
+        </button>
+
+      </div>
+    </form>
+    </div><!-- end .form-card -->
+
+    <!-- Right: Side info panel (desktop only) -->
+    <aside class="form-side-info">
+      <div class="form-side-card">
+        <h4>🆓 இலவச அம்சங்கள் <span class="free-tag">FREE</span></h4>
+        <ul>
+          <li>ராசி சட்டம் (South Indian Rasi Chart)</li>
+          <li>லக்கினம் — Lagna / Ascendant</li>
+          <li>நட்சத்திரம் &amp; பாதம் — Nakshatra &amp; Pada</li>
+          <li>தசை &amp; புக்தி — Current Dasha / Bhukti</li>
+          <li>6 தோஷ பரிசீலனைகள் — Dosha checks</li>
+          <li>9 கிரக விவரம் — All 9 planets</li>
+          <li>WhatsApp பகிர்வு — Share link</li>
+        </ul>
+      </div>
+      <div class="form-side-card premium-items">
+        <h4>🔓 பிரீமியம் <span class="paid-tag">₹99 ONE-TIME</span></h4>
+        <ul>
+          <li>நவாம்சம் D9 — Navamsa Chart</li>
+          <li>முழு தசை அட்டவணை — Full Dasha table</li>
+          <li>அஷ்டகவர்க்கம் — Ashtakavarga</li>
+          <li>PDF பதிவிறக்கம் — Download PDF</li>
+          <li>1 வருட அணுகல் — 1 year access</li>
+        </ul>
+      </div>
+      <div class="form-side-card" style="border-top-color:var(--primary)">
+        <h4>ℹ️ பற்றி</h4>
+        <ul>
+          <li>லாஹிரி அயனாம்சம் (Lahiri ayanamsa)</li>
+          <li>VSOP87 கோள் இயக்கம்</li>
+          <li>உலக நகரங்கள் 60+ — 60+ world cities</li>
+          <li>நான்கு மொழிகள் — 4 languages</li>
+          <li>தரவு சேமிக்கப்படாது — No data stored</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div><!-- end .form-page-wrap -->
+
+  <!-- ── Features overview ────────────────────────────────────────────── -->
+  <section class="section fade-in-2">
+    <h2 class="text-center mb-2" style="color:var(--primary-d)">உங்கள் ஜாதகம் — What's included</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem">
+      <div class="card text-center">
+        <div style="font-size:2rem;margin-bottom:.5rem">♈</div>
+        <div class="fw-bold" style="font-size:.95rem">Rasi Chart</div>
+        <div class="text-muted" style="font-size:.8rem">South Indian SVG</div>
+      </div>
+      <div class="card text-center">
+        <div style="font-size:2rem;margin-bottom:.5rem">☽</div>
+        <div class="fw-bold" style="font-size:.95rem">Nakshatra</div>
+        <div class="text-muted" style="font-size:.8rem">All 27 stars</div>
+      </div>
+      <div class="card text-center">
+        <div style="font-size:2rem;margin-bottom:.5rem">⏳</div>
+        <div class="fw-bold" style="font-size:.95rem">Vimshottari Dasha</div>
+        <div class="text-muted" style="font-size:.8rem">Current period</div>
+      </div>
+      <div class="card text-center">
+        <div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>
+        <div class="fw-bold" style="font-size:.95rem">Dosha Check</div>
+        <div class="text-muted" style="font-size:.8rem">Mangal, Kala Sarpa…</div>
+      </div>
+      <div class="card text-center" style="border:2px solid var(--gold)">
+        <div style="font-size:2rem;margin-bottom:.5rem">🔓</div>
+        <div class="fw-bold" style="font-size:.95rem">Navamsa D9</div>
+        <div style="font-size:.8rem;color:var(--gold-d)">Premium ₹99</div>
+      </div>
+      <div class="card text-center" style="border:2px solid var(--gold)">
+        <div style="font-size:2rem;margin-bottom:.5rem">📊</div>
+        <div class="fw-bold" style="font-size:.95rem">Ashtakavarga</div>
+        <div style="font-size:.8rem;color:var(--gold-d)">Premium ₹99</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ────────────────────────────────────────────────────────── -->
+  <section class="section fade-in-3">
+    <h2 class="mb-2">Frequently Asked Questions</h2>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <div class="card">
+        <div class="fw-bold">What is Jathagam?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Jathagam (ஜாதகம்) is the Tamil word for a Vedic birth chart — a map of planetary positions at the moment of your birth, used for astrological analysis.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">Is it free?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Yes! Rasi chart, nakshatra, planetary positions, and current dasha are completely free. Premium features (Navamsa, full dasha timeline, Ashtakavarga, PDF) unlock for ₹99 one-time.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">How accurate are the calculations?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">We use Lahiri (Chitrapaksha) ayanamsa — the standard for Vedic astrology. Planetary positions are accurate to within ~1° for most planets, sufficient for all chart purposes.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">I don't know my birth time. What happens?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Check "Time not known" and we'll use 12:00 noon. All planets will still be placed correctly — only the Lagna (Ascendant) and some house-dependent interpretations will be approximate.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">Can I share my chart?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Yes! Every chart gets a unique shareable link. You can share on WhatsApp, download as PNG, or save as PDF (premium).</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <h4>Jathagam ✦</h4>
+    <div class="footer-cities">
+      <a href="/chart.html">Chennai</a> <a href="/chart.html">Mumbai</a>
+      <a href="/chart.html">Delhi</a> <a href="/chart.html">Bangalore</a>
+      <a href="/chart.html">Hyderabad</a> <a href="/chart.html">Kolkata</a>
+      <a href="/chart.html">Pune</a> <a href="/chart.html">Ahmedabad</a>
+      <a href="/chart.html">Coimbatore</a> <a href="/chart.html">Madurai</a>
+      <a href="/chart.html">Vijayawada</a> <a href="/chart.html">Tiruchirappalli</a>
+      <a href="/chart.html">Mysore</a> <a href="/chart.html">Visakhapatnam</a>
+      <a href="/chart.html">Singapore</a> <a href="/chart.html">Dubai</a>
+      <a href="/chart.html">London</a> <a href="/chart.html">Toronto</a>
+      <a href="/chart.html">New York</a> <a href="/chart.html">Kuala Lumpur</a>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
+      <a href="/blog/jathagam-tamil.html">Jathagam in Tamil</a>
+      <a href="/blog/tamil-jathagam-free.html">Free Tamil Jathagam</a>
+      <a href="/blog/birth-chart-telugu.html">Birth Chart Telugu</a>
+      <a href="/blog/janam-kundli-hindi.html">Janam Kundli Hindi</a>
+      <a href="/blog/rasi-chart-online.html">Rasi Chart Online</a>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
+      <a href="/panchangam.html">📅 Tamil Panchangam</a>
+    </div>
+    <div class="footer-copy">© 2026 Jathagam.app · Lahiri Ayanamsa · உங்கள் தரவு எங்கும் சேமிக்கப்படாது</div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<!-- ── Scripts ────────────────────────────────────────────────────────── -->
+<script src="i18n.js"></script>
+<script>
+/* ── City data ────────────────────────────────────────────────────────── */
+const CITIES = [
+  // Indian cities
+  { name:'Chennai',      state:'Tamil Nadu',    lat:13.0827,  lon:80.2707,  tz:5.5 },
+  { name:'Mumbai',       state:'Maharashtra',   lat:19.0760,  lon:72.8777,  tz:5.5 },
+  { name:'Delhi',        state:'Delhi',         lat:28.7041,  lon:77.1025,  tz:5.5 },
+  { name:'Bangalore',    state:'Karnataka',     lat:12.9716,  lon:77.5946,  tz:5.5 },
+  { name:'Hyderabad',    state:'Telangana',     lat:17.3850,  lon:78.4867,  tz:5.5 },
+  { name:'Kolkata',      state:'West Bengal',   lat:22.5726,  lon:88.3639,  tz:5.5 },
+  { name:'Pune',         state:'Maharashtra',   lat:18.5204,  lon:73.8567,  tz:5.5 },
+  { name:'Ahmedabad',    state:'Gujarat',       lat:23.0225,  lon:72.5714,  tz:5.5 },
+  { name:'Surat',        state:'Gujarat',       lat:21.1702,  lon:72.8311,  tz:5.5 },
+  { name:'Jaipur',       state:'Rajasthan',     lat:26.9124,  lon:75.7873,  tz:5.5 },
+  { name:'Lucknow',      state:'Uttar Pradesh', lat:26.8467,  lon:80.9462,  tz:5.5 },
+  { name:'Kanpur',       state:'Uttar Pradesh', lat:26.4499,  lon:80.3319,  tz:5.5 },
+  { name:'Nagpur',       state:'Maharashtra',   lat:21.1458,  lon:79.0882,  tz:5.5 },
+  { name:'Indore',       state:'Madhya Pradesh',lat:22.7196,  lon:75.8577,  tz:5.5 },
+  { name:'Thane',        state:'Maharashtra',   lat:19.2183,  lon:72.9781,  tz:5.5 },
+  { name:'Bhopal',       state:'Madhya Pradesh',lat:23.2599,  lon:77.4126,  tz:5.5 },
+  { name:'Visakhapatnam',state:'Andhra Pradesh',lat:17.6868,  lon:83.2185,  tz:5.5 },
+  { name:'Patna',        state:'Bihar',         lat:25.5941,  lon:85.1376,  tz:5.5 },
+  { name:'Vadodara',     state:'Gujarat',       lat:22.3072,  lon:73.1812,  tz:5.5 },
+  { name:'Ludhiana',     state:'Punjab',        lat:30.9010,  lon:75.8573,  tz:5.5 },
+  { name:'Agra',         state:'Uttar Pradesh', lat:27.1767,  lon:78.0081,  tz:5.5 },
+  { name:'Nashik',       state:'Maharashtra',   lat:19.9975,  lon:73.7898,  tz:5.5 },
+  { name:'Faridabad',    state:'Haryana',       lat:28.4089,  lon:77.3178,  tz:5.5 },
+  { name:'Meerut',       state:'Uttar Pradesh', lat:28.9845,  lon:77.7064,  tz:5.5 },
+  { name:'Rajkot',       state:'Gujarat',       lat:22.3039,  lon:70.8022,  tz:5.5 },
+  { name:'Varanasi',     state:'Uttar Pradesh', lat:25.3176,  lon:82.9739,  tz:5.5 },
+  { name:'Srinagar',     state:'J&K',           lat:34.0837,  lon:74.7973,  tz:5.5 },
+  { name:'Aurangabad',   state:'Maharashtra',   lat:19.8762,  lon:75.3433,  tz:5.5 },
+  { name:'Dhanbad',      state:'Jharkhand',     lat:23.7957,  lon:86.4304,  tz:5.5 },
+  { name:'Amritsar',     state:'Punjab',        lat:31.6340,  lon:74.8723,  tz:5.5 },
+  { name:'Allahabad',    state:'Uttar Pradesh', lat:25.4358,  lon:81.8463,  tz:5.5 },
+  { name:'Ranchi',       state:'Jharkhand',     lat:23.3441,  lon:85.3096,  tz:5.5 },
+  { name:'Gwalior',      state:'Madhya Pradesh',lat:26.2183,  lon:78.1828,  tz:5.5 },
+  { name:'Jabalpur',     state:'Madhya Pradesh',lat:23.1815,  lon:79.9864,  tz:5.5 },
+  { name:'Coimbatore',   state:'Tamil Nadu',    lat:11.0168,  lon:76.9558,  tz:5.5 },
+  { name:'Vijayawada',   state:'Andhra Pradesh',lat:16.5062,  lon:80.6480,  tz:5.5 },
+  { name:'Madurai',      state:'Tamil Nadu',    lat:9.9252,   lon:78.1198,  tz:5.5 },
+  { name:'Jodhpur',      state:'Rajasthan',     lat:26.2389,  lon:73.0243,  tz:5.5 },
+  { name:'Raipur',       state:'Chhattisgarh',  lat:21.2514,  lon:81.6296,  tz:5.5 },
+  { name:'Kota',         state:'Rajasthan',     lat:25.2138,  lon:75.8648,  tz:5.5 },
+  { name:'Chandigarh',   state:'Chandigarh',    lat:30.7333,  lon:76.7794,  tz:5.5 },
+  { name:'Guwahati',     state:'Assam',         lat:26.1445,  lon:91.7362,  tz:5.5 },
+  { name:'Solapur',      state:'Maharashtra',   lat:17.6805,  lon:75.9064,  tz:5.5 },
+  { name:'Hubli',        state:'Karnataka',     lat:15.3647,  lon:75.1240,  tz:5.5 },
+  { name:'Tiruchirappalli',state:'Tamil Nadu',  lat:10.7905,  lon:78.7047,  tz:5.5 },
+  { name:'Bareilly',     state:'Uttar Pradesh', lat:28.3670,  lon:79.4304,  tz:5.5 },
+  { name:'Mysore',       state:'Karnataka',     lat:12.2958,  lon:76.6394,  tz:5.5 },
+  { name:'Tirunelveli',  state:'Tamil Nadu',    lat:8.7139,   lon:77.7567,  tz:5.5 },
+  { name:'Salem',        state:'Tamil Nadu',    lat:11.6643,  lon:78.1460,  tz:5.5 },
+  { name:'Erode',        state:'Tamil Nadu',    lat:11.3410,  lon:77.7172,  tz:5.5 },
+  { name:'Vellore',      state:'Tamil Nadu',    lat:12.9165,  lon:79.1325,  tz:5.5 },
+  // International cities
+  { name:'Singapore',    state:'Singapore',     lat:1.3521,   lon:103.8198, tz:8.0 },
+  { name:'Dubai',        state:'UAE',           lat:25.2048,  lon:55.2708,  tz:4.0 },
+  { name:'London',       state:'UK',            lat:51.5074,  lon:-0.1278,  tz:0.0 },
+  { name:'Toronto',      state:'Canada',        lat:43.6532,  lon:-79.3832, tz:-5.0 },
+  { name:'New York',     state:'USA',           lat:40.7128,  lon:-74.0060, tz:-5.0 },
+  { name:'Sydney',       state:'Australia',     lat:-33.8688, lon:151.2093, tz:10.0 },
+  { name:'Kuala Lumpur', state:'Malaysia',      lat:3.1390,   lon:101.6869, tz:8.0 },
+  { name:'Colombo',      state:'Sri Lanka',     lat:6.9271,   lon:79.8612,  tz:5.5 },
+  { name:'Sharjah',      state:'UAE',           lat:25.3463,  lon:55.4209,  tz:4.0 },
+  { name:'Melbourne',    state:'Australia',     lat:-37.8136, lon:144.9631, tz:10.0 },
+  { name:'San Francisco',state:'USA',           lat:37.7749,  lon:-122.4194,tz:-8.0 },
+  { name:'Auckland',     state:'New Zealand',   lat:-36.8509, lon:174.7645, tz:12.0 },
+];
+
+/* ── City Autocomplete ────────────────────────────────────────────────── */
+const pobInput      = document.getElementById('pob');
+const cityDropdown  = document.getElementById('cityDropdown');
+let selectedCity    = null;
+
+pobInput.addEventListener('input', () => {
+  const query = pobInput.value.trim().toLowerCase();
+  if (query.length < 2) { cityDropdown.classList.remove('open'); return; }
+
+  const matches = CITIES.filter(c =>
+    c.name.toLowerCase().startsWith(query) ||
+    c.name.toLowerCase().includes(query)
+  ).slice(0, 8);
+
+  if (!matches.length) { cityDropdown.classList.remove('open'); return; }
+
+  cityDropdown.innerHTML = '';
+  matches.forEach(city => {
+    const item = document.createElement('div');
+    item.className = 'autocomplete-item';
+    item.innerHTML = `${city.name}<span class="city-state">, ${city.state}</span>`;
+    item.addEventListener('click', () => {
+      pobInput.value = city.name;
+      document.getElementById('lat').value = city.lat;
+      document.getElementById('lon').value = city.lon;
+      document.getElementById('tz').value  = city.tz;
+      selectedCity = city;
+      cityDropdown.classList.remove('open');
+    });
+    cityDropdown.appendChild(item);
+  });
+  cityDropdown.classList.add('open');
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.autocomplete-wrap')) cityDropdown.classList.remove('open');
+});
+
+/* ── Gender selection ─────────────────────────────────────────────────── */
+function selectGender(btn) {
+  document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('gender').value = btn.dataset.gender;
+}
+
+/* ── Unknown time toggle ──────────────────────────────────────────────── */
+function toggleUnknownTime(checkbox) {
+  const tobInput = document.getElementById('tob');
+  document.getElementById('unknownTimeNote').style.display = checkbox.checked ? 'block' : 'none';
+  tobInput.value = checkbox.checked ? '12:00' : '12:00';
+  tobInput.disabled = checkbox.checked;
+}
+
+/* ── Form submission ──────────────────────────────────────────────────── */
+function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const name   = document.getElementById('name').value.trim();
+  const dob    = document.getElementById('dob').value;
+  const tob    = document.getElementById('tob').value;
+  const lat    = parseFloat(document.getElementById('lat').value);
+  const lon    = parseFloat(document.getElementById('lon').value);
+  const tz     = parseFloat(document.getElementById('tz').value);
+  const gender = document.getElementById('gender').value;
+  const cityName= pobInput.value.trim();
+
+  if (!name)    { showError('name', 'Please enter your name'); return; }
+  if (!dob)     { showError('dob', 'Please enter date of birth'); return; }
+  if (!cityName){ showError('pob', 'Please select a city from the list'); return; }
+  if (!lat || !lon) { showError('pob', 'Please select a city from the dropdown'); return; }
+
+  const data = {
+    n: name, d: dob, t: tob,
+    lat, lon, tz,
+    g: gender, l: currentLang,
+    city: cityName,
+  };
+
+  // Encode and redirect
+  const encoded = _encodeData(data);
+  window.location.href = `chart.html?d=${encoded}`;
+}
+
+function _encodeData(data) {
+  const json = JSON.stringify(data);
+  try { return btoa(encodeURIComponent(json)); }
+  catch(_) { return btoa(unescape(encodeURIComponent(json))); }
+}
+
+function showError(fieldId, msg) {
+  const el = document.getElementById(fieldId);
+  if (el) {
+    el.style.borderColor = 'var(--bad)';
+    setTimeout(() => { el.style.borderColor = ''; }, 3000);
+  }
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'show';
+  setTimeout(() => { toast.className = ''; }, 3000);
+}
+
+/* ── Init ─────────────────────────────────────────────────────────────── */
+// Set default DOB to 30 years ago
+const defaultDob = new Date();
+defaultDob.setFullYear(defaultDob.getFullYear() - 30);
+document.getElementById('dob').value = defaultDob.toISOString().slice(0, 10);
+
+// Apply stored language
+setLanguage(currentLang);
+</script>
+</body>
+</html>

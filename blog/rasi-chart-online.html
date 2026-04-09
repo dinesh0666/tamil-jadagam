@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Rasi Chart Online — Free South Indian Birth Chart | Jathagam.app</title>
+  <meta name="description" content="Generate your free Rasi chart online in South Indian style. Vedic birth chart calculator with Navamsa, Dasha, Nakshatra and Dosha. Instant, no signup.">
+  <meta name="keywords" content="rasi chart online, south indian birth chart, rasi chart free, rasi chart calculator, rasi chakram online, vedic birth chart">
+  <link rel="canonical" href="https://jathagam.app/rasi-chart-online">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"What is a Rasi chart?","acceptedAnswer":{"@type":"Answer","text":"A Rasi chart (Rasi Chakram) is the main birth chart in Vedic astrology. It shows which of 12 zodiac signs (rasis) each of the 9 planets occupied at birth. The South Indian style uses a fixed square grid; the North Indian style uses a diamond pattern."}},
+      {"@type":"Question","name":"How is South Indian Rasi chart different from North Indian?","acceptedAnswer":{"@type":"Answer","text":"In the South Indian chart, the rasis are fixed to specific cells in a 4×4 grid — Mesha (Aries) is always in the second cell of the top row. In the North Indian chart, the Lagna is always at the top and rasis rotate."}},
+      {"@type":"Question","name":"Which ayanamsa is best for Rasi chart?","acceptedAnswer":{"@type":"Answer","text":"Lahiri (Chitrapaksha) ayanamsa is the standard accepted by the Government of India and used by most jyotishis. It differs from Western astrology by about 23-24 degrees."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">Jathagam ✦</a>
+  <div class="nav-actions">
+    <a href="../index.html" class="nav-btn">Generate Free Rasi Chart</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content container">
+    <h1>Rasi Chart Online — Free South Indian Birth Chart</h1>
+    <p>Instant Vedic Rasi Chakram · Nakshatra · Dasha · Dosha Analysis</p>
+  </div>
+</section>
+
+<main class="container">
+  <article style="max-width:840px;margin:2rem auto">
+    <p style="font-size:1.1rem;line-height:1.8;color:var(--mid);margin-bottom:1.5rem">
+      The <strong>Rasi chart</strong> (Rasi Chakram, ராசி சட்டம், రాశి చక్రం) is the primary birth chart in Vedic (Jyotish) astrology. Unlike Western tropical astrology, the Vedic chart uses the <em>sidereal</em> zodiac — corrected by the Lahiri ayanamsa (currently ~23°51'). This means all planet positions are shifted by about 24 degrees compared to a Western chart. The result is a far more astronomically precise chart that aligns with actual star positions.
+    </p>
+
+    <div class="card" style="margin-bottom:2rem">
+      <h2 style="margin-bottom:1rem;font-size:1.2rem">Generate Your Free Rasi Chart</h2>
+      <form onsubmit="goChart(event)" style="display:grid;gap:.75rem">
+        <input type="text" id="b-name" placeholder="Full name" class="form-control" required>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div>
+            <label style="font-size:.8rem;color:var(--mid)">Date of Birth</label>
+            <input type="date" id="b-dob" class="form-control" required>
+          </div>
+          <div>
+            <label style="font-size:.8rem;color:var(--mid)">Time of Birth</label>
+            <input type="time" id="b-tob" class="form-control" value="12:00">
+          </div>
+        </div>
+        <input type="text" id="b-city" placeholder="Birth city — Chennai, Mumbai, Delhi, Singapore…" class="form-control" required>
+        <button type="submit" class="submit-btn">Generate Rasi Chart →</button>
+      </form>
+    </div>
+
+    <h2>South Indian vs North Indian Rasi Chart</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 1.5rem">
+      <div class="card">
+        <div class="fw-bold" style="color:var(--primary-d)">South Indian Style</div>
+        <ul style="font-size:.85rem;margin:.5rem 0 0;padding-left:1rem;color:var(--mid);line-height:1.9">
+          <li>Fixed rasi positions in 4×4 grid</li>
+          <li>Mesha always 2nd cell, top row</li>
+          <li>Lagna marked with diagonal lines</li>
+          <li>Used in Tamil Nadu, Kerala, AP, Karnataka</li>
+          <li>Easy to compare charts at a glance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="fw-bold" style="color:var(--primary-d)">North Indian Style</div>
+        <ul style="font-size:.85rem;margin:.5rem 0 0;padding-left:1rem;color:var(--mid);line-height:1.9">
+          <li>Lagna always at top, rasis rotate</li>
+          <li>Diamond pattern with 4 triangles</li>
+          <li>House numbers shown by rasi number</li>
+          <li>Used in North India</li>
+          <li>Lagna position immediately visible</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Reading a South Indian Rasi Chart</h2>
+    <p style="line-height:1.8;color:var(--mid)">
+      The South Indian 4×4 grid has fixed cells:
+    </p>
+    <div style="overflow-x:auto;margin:1rem 0">
+      <table style="border-collapse:collapse;font-size:.85rem;width:100%;text-align:center">
+        <thead style="background:var(--primary);color:white">
+          <tr><th style="padding:.4rem;width:25%">Pi Me</th><th style="width:25%">Ar</th><th style="width:25%">Ta</th><th style="width:25%">Ge Ca</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:.35rem;border:1px solid var(--border)">Pisces &amp; Mesha</td><td style="border:1px solid var(--border)">Aries</td><td style="border:1px solid var(--border)">Taurus</td><td style="border:1px solid var(--border)">Gemini &amp; Cancer</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:.35rem;border:1px solid var(--border)">Aquarius</td><td colspan="2" style="border:1px solid var(--border);font-style:italic;color:var(--mid)">Chart center<br>(name, date)</td><td style="border:1px solid var(--border)">Cancer</td></tr>
+          <tr><td style="padding:.35rem;border:1px solid var(--border)">Capricorn</td><td style="border:1px solid var(--border)" colspan="2">&nbsp;</td><td style="border:1px solid var(--border)">Leo</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:.35rem;border:1px solid var(--border)">Sg Sc</td><td style="border:1px solid var(--border)">Scorpio</td><td style="border:1px solid var(--border)">Libra</td><td style="border:1px solid var(--border)">Vi Le</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ad-slot">Advertisement</div>
+
+    <h2>FAQs — Rasi Chart Online</h2>
+    <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:1rem">
+      <div class="card">
+        <div class="fw-bold">What is a Rasi chart?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">A Rasi chart (Rasi Chakram) is the main birth chart in Vedic astrology. It shows which of 12 zodiac signs (rasis) each of the 9 planets occupied at birth.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">How is South Indian Rasi chart different from North Indian?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">In the South Indian chart, the rasis are fixed to specific cells in a 4×4 grid. In the North Indian chart, the Lagna is always at the top and rasis rotate around the diamond.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">Which ayanamsa is best for Rasi chart?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Lahiri (Chitrapaksha) ayanamsa is the standard accepted by the Government of India and used by most jyotishis.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">What is the difference between Sun sign and Moon sign (Rasi)?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">In Vedic astrology, your "rasi" is your Moon sign — the zodiac sign the Moon was in at birth. This differs from the Western Sun sign. The Rasi determines your nakshatra and the start of your dasha period.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">Is the chart free?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Yes — Rasi chart, Lagna, nakshatra, and current dasha are always free. Premium (Navamsa, Ashtakavarga, PDF) costs ₹99 one-time.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;font-size:.85rem;color:var(--muted)">
+      Also see: <a href="jathagam-tamil.html">Jathagam in Tamil</a> ·
+      <a href="tamil-jathagam-free.html">Free Tamil Jathagam</a> ·
+      <a href="birth-chart-telugu.html">Telugu Birth Chart</a> ·
+      <a href="janam-kundli-hindi.html">Hindi Kundali</a>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <h4>Jathagam ✦</h4>
+    <div class="footer-cities">
+      <a href="../index.html">Chennai Rasi Chart</a>
+      <a href="../index.html">Mumbai Rasi Chart</a>
+      <a href="../index.html">Delhi Rasi Chart</a>
+      <a href="../index.html">Bangalore Rasi Chart</a>
+      <a href="../index.html">Hyderabad Rasi Chart</a>
+      <a href="../index.html">Kolkata Rasi Chart</a>
+      <a href="../index.html">Singapore Rasi Chart</a>
+      <a href="../index.html">Dubai Rasi Chart</a>
+    </div>
+    <div class="footer-copy">© 2026 Jathagam.app · Free Rasi Chart Online</div>
+  </div>
+</footer>
+
+<script>
+const CITY_GEO = { chennai:[13.0827,80.2707,5.5], mumbai:[19.076,72.8777,5.5], delhi:[28.7041,77.1025,5.5], bangalore:[12.9716,77.5946,5.5], hyderabad:[17.385,78.4867,5.5], kolkata:[22.5726,88.3639,5.5], singapore:[1.3521,103.8198,8], dubai:[25.2048,55.2708,4], london:[51.5074,-0.1278,0], toronto:[43.6532,-79.3832,-5], 'new york':[40.7128,-74.006,-5] };
+function goChart(e) {
+  e.preventDefault();
+  const n    = document.getElementById('b-name').value.trim();
+  const d    = document.getElementById('b-dob').value;
+  const t    = document.getElementById('b-tob').value;
+  const city = document.getElementById('b-city').value.trim();
+  const geo  = CITY_GEO[city.toLowerCase()] || [13.0827, 80.2707, 5.5];
+  const data = { n, d, t, lat:geo[0], lon:geo[1], tz:geo[2], g:'M', l:'en', city };
+  window.location.href = `../chart.html?d=${btoa(encodeURIComponent(JSON.stringify(data)))}`;
+}
+</script>
+</body>
+</html>
