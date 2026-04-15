@@ -2,29 +2,23 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
-    { "source": "/jathagam-tamil",    "destination": "/blog/jathagam-tamil.html" },
-    { "source": "/tamil-jathagam-free", "destination": "/blog/tamil-jathagam-free.html" },
+    { "source": "/jathagam-tamil",     "destination": "/blog/jathagam-tamil.html" },
+    { "source": "/tamil-jathagam-free","destination": "/blog/tamil-jathagam-free.html" },
     { "source": "/birth-chart-telugu", "destination": "/blog/birth-chart-telugu.html" },
     { "source": "/janam-kundli-hindi", "destination": "/blog/janam-kundli-hindi.html" },
     { "source": "/rasi-chart-online",  "destination": "/blog/rasi-chart-online.html" },
-    { "source": "/chart",             "destination": "/chart.html" }
+    { "source": "/chart",              "destination": "/chart.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options",    "value": "nosniff" },
-        { "key": "X-Frame-Options",           "value": "DENY" },
-        { "key": "X-XSS-Protection",          "value": "1; mode=block" },
-        { "key": "Referrer-Policy",           "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy",        "value": "camera=(), microphone=(), geolocation=(self)" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options",        "value": "DENY" },
+        { "key": "X-XSS-Protection",       "value": "1; mode=block" },
+        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy",     "value": "camera=(), microphone=(), geolocation=(self)" },
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://checkout.razorpay.com https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.razorpay.com https://lnsmedia.razorpay.com; frame-src https://checkout.razorpay.com https://googlesyndication.com; object-src 'none'; base-uri 'self'"
@@ -35,49 +29,6 @@
       "source": "/api/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store" }
-      ]
-    },
-    {
-      "source": "/assets/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.js",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.css",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
-    }
-  ]
-}
-
-    { "source": "/jathagam-tamil",    "destination": "/blog/jathagam-tamil.html" },
-    { "source": "/tamil-jathagam-free", "destination": "/blog/tamil-jathagam-free.html" },
-    { "source": "/birth-chart-telugu", "destination": "/blog/birth-chart-telugu.html" },
-    { "source": "/janam-kundli-hindi", "destination": "/blog/janam-kundli-hindi.html" },
-    { "source": "/rasi-chart-online",  "destination": "/blog/rasi-chart-online.html" },
-    { "source": "/chart",             "destination": "/chart.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options",    "value": "nosniff" },
-        { "key": "X-Frame-Options",           "value": "DENY" },
-        { "key": "X-XSS-Protection",          "value": "1; mode=block" },
-        { "key": "Referrer-Policy",           "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy",        "value": "camera=(), microphone=(), geolocation=()" },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://checkout.razorpay.com https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.razorpay.com; frame-src https://checkout.razorpay.com https://googlesyndication.com; object-src 'none'; base-uri 'self'"
-        }
       ]
     },
     {
