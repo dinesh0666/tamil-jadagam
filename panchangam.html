@@ -73,6 +73,43 @@
 <!-- ── Main content ────────────────────────────────────────────────────── -->
 <main class="container" id="main-content" style="padding-bottom:3rem">
 
+  <!-- Location selector -->
+  <div class="panch-location-bar">
+    <label for="locationSelect" class="panch-loc-label">📍 இடம் / Location:</label>
+    <select id="locationSelect" class="panch-loc-select" onchange="changeLocation(this.value)">
+      <optgroup label="தமிழ்நாடு / Tamil Nadu">
+        <option value="13.0827|80.2707|5.5"     selected>சென்னை — Chennai</option>
+        <option value="11.0168|76.9558|5.5">கோயம்புத்தூர் — Coimbatore</option>
+        <option value="9.9252|78.1198|5.5">மதுரை — Madurai</option>
+        <option value="8.7139|77.7567|5.5">திருநெல்வேலி — Tirunelveli</option>
+        <option value="11.6643|78.1460|5.5">சேலம் — Salem</option>
+        <option value="10.7905|78.7047|5.5">திருச்சி — Tiruchirappalli</option>
+      </optgroup>
+      <optgroup label="இந்தியா / India">
+        <option value="28.6139|77.2090|5.5">டெல்லி — Delhi</option>
+        <option value="19.0760|72.8777|5.5">மும்பை — Mumbai</option>
+        <option value="12.9716|77.5946|5.5">பெங்களூரு — Bengaluru</option>
+        <option value="17.3850|78.4867|5.5">ஹைதராபாத் — Hyderabad</option>
+        <option value="22.5726|88.3639|5.5">கொல்கத்தா — Kolkata</option>
+        <option value="8.5241|76.9366|5.5">திருவனந்தபுரம் — Trivandrum</option>
+        <option value="6.9271|79.8612|5.5">கொழும்பு — Colombo</option>
+        <option value="9.6615|80.0255|5.5">யாழ்ப்பாணம் — Jaffna</option>
+      </optgroup>
+      <optgroup label="வெளிநாடு / Overseas">
+        <option value="1.3521|103.8198|8">சிங்கப்பூர் — Singapore</option>
+        <option value="3.1390|101.6869|8">குவாலாலம்பூர் — Kuala Lumpur</option>
+        <option value="25.2048|55.2708|4">துபாய் — Dubai</option>
+        <option value="24.4539|54.3773|4">அபுதாபி — Abu Dhabi</option>
+        <option value="51.5074|-0.1278|1">லண்டன் — London</option>
+        <option value="43.6532|-79.3832|-5">டொரண்டோ — Toronto</option>
+        <option value="40.7128|-74.0060|-5">நியூயார்க் — New York</option>
+        <option value="-33.8688|151.2093|11">சிட்னி — Sydney</option>
+        <option value="1.2897|103.8501|8">ஜோகோர் — Johor Bahru</option>
+      </optgroup>
+    </select>
+    <button class="panch-loc-gps" onclick="useGPSLocation()" title="Use my current location">🎯 GPS</button>
+  </div>
+
   <!-- Calendar + Detail layout -->
   <div class="panch-layout">
 
@@ -119,9 +156,9 @@
 
   <!-- ── Info card ──────────────────────────────────────────────────── -->
   <div class="card fade-in-2" style="margin-top:2rem;font-size:.87rem;color:var(--mid)">
-    <strong>ℹ️ குறிப்பு:</strong> இந்த பஞ்சாங்கம் சென்னை (IST UTC+5:30) நேரத்தை அடிப்படையாக கொண்டு கணக்கிடப்படுகிறது.
-    இராகு காலம், நல்ல நேரம் உங்கள் ஊரின் சூரிய உதய நேரத்தை பொருத்து சிறிது மாறலாம்.
-    <strong>Note:</strong> Times are for Chennai (IST). Adjust Rahu Kalam ~15 min per degree of longitude from 80°E.
+    <strong>ℹ️ குறிப்பு:</strong> சூரிய உதயம் / அஸ்தமனம் NOAA வானியல் கணக்கீட்டின் படி தேர்ந்த இடத்திற்கு கணக்கிடப்படுகிறது.
+    நல்ல நேரம் &amp; இராகு காலம் குரு / ராகு ஹோரா முறையில் கணக்கிடப்படுகிறது.
+    <strong>Note:</strong> Sunrise/sunset computed via NOAA algorithm for the selected city. Nalla Neram uses Chaldean hora system.
   </div>
 
   <!-- ── CTA to Jathagam ────────────────────────────────────────────── -->
@@ -174,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init() {
   renderCalendar(calYear, calMonth);
-  renderDetail(Panchangam.calculate(selectedDate));
+  renderDetail(calc());
 }
 
 /* ── Calendar rendering ─────────────────────────────────────────────── */
@@ -223,7 +260,7 @@ function renderCalendar(year, month) {
 function selectDate(y, m, d) {
   selectedDate = new Date(y, m, d);
   renderCalendar(calYear, calMonth);
-  renderDetail(Panchangam.calculate(selectedDate));
+  renderDetail(calc());
   document.getElementById('panchDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -243,7 +280,7 @@ function goToday() {
   calMonth = t.getMonth();
   selectedDate = t;
   renderCalendar(calYear, calMonth);
-  renderDetail(Panchangam.calculate(selectedDate));
+  renderDetail(calc());
 }
 
 /* ── Detail rendering ───────────────────────────────────────────────── */
@@ -283,7 +320,7 @@ function renderDetail(d) {
         <div class="pfi-icon" aria-hidden="true">⭐</div>
         <div class="pfi-label">நட்சத்திரம்</div>
         <div class="pfi-value">${d.nakshatra}</div>
-        <div class="pfi-sub">பாதம் ${d.nakPada}</div>
+        <div class="pfi-sub">பாதம் ${d.nakPada} · அதிபதி: ${d.nakLord}</div>
       </div>
       <div class="panch-five-item">
         <div class="pfi-icon" aria-hidden="true">☽</div>
@@ -295,7 +332,7 @@ function renderDetail(d) {
         <div class="pfi-icon" aria-hidden="true">✦</div>
         <div class="pfi-label">யோகம்</div>
         <div class="pfi-value">${d.yogam}</div>
-        <div class="pfi-sub">&nbsp;</div>
+        <div class="pfi-sub">${d.yogamQuality === 'bad' ? '<span class="yogam-bad-badge">⚠️ அசுப</span>' : '<span class="yogam-good-badge">✓ சுப</span>'}</div>
       </div>
       <div class="panch-five-item">
         <div class="pfi-icon" aria-hidden="true">◐</div>
@@ -316,13 +353,13 @@ function renderDetail(d) {
     <div class="panch-times-grid">
       <div class="panch-time-card good">
         <div class="ptc-icon" aria-hidden="true">✅</div>
-        <div class="ptc-label">நல்ல நேரம்</div>
-        <div class="ptc-value">${d.nallaNeram}</div>
+        <div class="ptc-label">நல்ல நேரம் (குரு ஹோரா)</div>
+        <div class="ptc-value">${d.nallaNeramTimes.length > 1 ? d.nallaNeramTimes.join('<br>') : d.nallaNeram}</div>
       </div>
       <div class="panch-time-card good">
         <div class="ptc-icon" aria-hidden="true">🌸</div>
-        <div class="ptc-label">கௌரி நல்ல நேரம்</div>
-        <div class="ptc-value">${d.gowriNeram}</div>
+        <div class="ptc-label">கௌரி நல்ல நேரம் (சந்திர ஹோரா)</div>
+        <div class="ptc-value">${d.gowriNeramTimes.length > 1 ? d.gowriNeramTimes.join('<br>') : d.gowriNeram}</div>
       </div>
       <div class="panch-time-card info">
         <div class="ptc-icon" aria-hidden="true">🌅</div>
@@ -386,7 +423,7 @@ function renderDetail(d) {
 
 /* ── Share helpers ───────────────────────────────────────────────────── */
 function shareToday() {
-  const d = Panchangam.calculate(selectedDate);
+  const d = calc();
   const text = `📅 ${d.vaaram} — ${selectedDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}
 ✦ தமிழ் தேதி: ${d.tamilYear} ${d.tamilMonth} ${d.tamilDate}
 ⭐ நட்சத்திரம்: ${d.nakshatra} (பாதம் ${d.nakPada})

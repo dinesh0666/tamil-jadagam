@@ -1164,7 +1164,7 @@ a:focus-visible { border-radius: var(--radius); }
 .panch-cal-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 3px;
   margin-bottom: 4px;
 }
 .panch-cal-weekdays span {
@@ -1372,6 +1372,66 @@ a:focus-visible { border-radius: var(--radius); }
 .ptc-icon  { font-size: 1.1rem; }
 .ptc-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--mid); }
 .ptc-value { font-size: .88rem; font-weight: 700; color: var(--dark); }
+
+/* ── Location selector bar ───────────────────────────────────────────── */
+.panch-location-bar {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  padding: .6rem .9rem;
+  background: var(--neutral-l);
+  border-radius: var(--radius);
+  font-size: .85rem;
+}
+.panch-loc-label { font-weight: 600; color: var(--dark); white-space: nowrap; }
+.panch-loc-select {
+  flex: 1;
+  min-width: 180px;
+  padding: .35rem .6rem;
+  border: 1.5px solid #d4b8a0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: .85rem;
+  font-family: inherit;
+  color: var(--dark);
+  cursor: pointer;
+}
+.panch-loc-gps {
+  padding: .35rem .75rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--primary);
+  font-size: .82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.panch-loc-gps:hover { background: var(--primary); color: #fff; }
+
+/* ── Yogam quality badges ────────────────────────────────────────────── */
+.yogam-bad-badge {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .15rem .4rem;
+  border-radius: 4px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+.yogam-good-badge {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .15rem .4rem;
+  border-radius: 4px;
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #86efac;
+}
 
 /* ── Chandrashtamam strip ────────────────────────────────────────────── */
 .panch-chandrastam {

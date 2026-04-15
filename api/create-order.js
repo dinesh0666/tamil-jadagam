@@ -1,22 +1,32 @@
 /**
  * api/create-order.js — Vercel serverless function
- * Creates a Razorpay order server-side. Amount is fixed here so it
- * cannot be tampered with from the browser.
+ * Creates a Razorpay order server-side. Amount fixed here — cannot be tampered via browser.
  *
- * Environment variables required (set in Vercel dashboard):
- *   RAZORPAY_KEY_ID     — rzp_test_... or rzp_live_...
+ * Environment variables (set in Vercel dashboard):
+ *   RAZORPAY_KEY_ID     — rzp_live_... (or rzp_test_... for staging)
  *   RAZORPAY_KEY_SECRET — your Razorpay secret key
+ *   ALLOWED_ORIGIN      — https://jathagam.app (your production domain)
  */
 'use strict';
 
 const Razorpay = require('razorpay');
 
-module.exports = async (req, res) => {
-  // CORS — only needed if you ever call from a different origin
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://jathagam.app';
+
+function setCORS(req, res) {
+  const origin = req.headers.origin || '';
+  // Only allow our own domain (or localhost in dev)
+  const isAllowed = origin === ALLOWED_ORIGIN || /^http:\/\/localhost(:\d+)?$/.test(origin);
+  if (isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+}
 
+module.exports = async (req, res) => {
+  setCORS(req, res);
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -32,18 +42,18 @@ module.exports = async (req, res) => {
     });
 
     const order = await razorpay.orders.create({
-      amount:          9900,          // ₹99 in paise — fixed server-side, cannot be tampered
+      amount:          9900,          // ₹99 in paise — fixed here, cannot be tampered
       currency:        'INR',
       receipt:         `jathagam_${Date.now()}`,
       payment_capture: 1,
     });
 
-    // Return only what the frontend needs. Key Secret never leaves this function.
+    // Return only what the frontend needs. Secret never leaves this function.
     return res.status(200).json({
       order_id: order.id,
       amount:   order.amount,
       currency: order.currency,
-      key_id:   process.env.RAZORPAY_KEY_ID,  // Public identifier — safe to expose
+      key_id:   process.env.RAZORPAY_KEY_ID,  // Public key — safe to expose
     });
 
   } catch (err) {

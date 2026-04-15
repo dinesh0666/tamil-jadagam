@@ -1,20 +1,31 @@
 /**
  * api/verify-payment.js — Vercel serverless function
  * Verifies Razorpay payment signature using HMAC-SHA256.
- * The Key Secret never touches the browser — verification happens here.
+ * Key Secret never touches the browser.
  *
- * Environment variables required (set in Vercel dashboard):
+ * Environment variables (set in Vercel dashboard):
  *   RAZORPAY_KEY_SECRET — your Razorpay secret key
+ *   ALLOWED_ORIGIN      — https://jathagam.app
  */
 'use strict';
 
 const crypto = require('crypto');
 
-module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://jathagam.app';
+
+function setCORS(req, res) {
+  const origin = req.headers.origin || '';
+  const isAllowed = origin === ALLOWED_ORIGIN || /^http:\/\/localhost(:\d+)?$/.test(origin);
+  if (isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+}
 
+module.exports = (req, res) => {
+  setCORS(req, res);
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -22,6 +33,13 @@ module.exports = (req, res) => {
 
   if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
     return res.status(400).json({ verified: false, error: 'Missing required fields' });
+  }
+
+  // Basic format validation — all three must be non-empty strings up to 100 chars
+  const valid = [razorpay_payment_id, razorpay_order_id, razorpay_signature]
+    .every(v => typeof v === 'string' && v.length > 0 && v.length <= 200);
+  if (!valid) {
+    return res.status(400).json({ verified: false, error: 'Invalid field format' });
   }
 
   if (!process.env.RAZORPAY_KEY_SECRET) {
@@ -36,15 +54,16 @@ module.exports = (req, res) => {
     .update(payload)
     .digest('hex');
 
-  // Use timingSafeEqual to prevent timing attacks
-  const expectedBuf = Buffer.from(expected,             'hex');
-  const receivedBuf = Buffer.from(razorpay_signature,   'hex');
-
-  if (expectedBuf.length !== receivedBuf.length) {
-    return res.status(400).json({ verified: false });
+  let isValid = false;
+  try {
+    const expectedBuf = Buffer.from(expected,               'hex');
+    const receivedBuf = Buffer.from(razorpay_signature,     'hex');
+    if (expectedBuf.length === receivedBuf.length) {
+      isValid = crypto.timingSafeEqual(expectedBuf, receivedBuf);
+    }
+  } catch (_) {
+    isValid = false;
   }
-
-  const isValid = crypto.timingSafeEqual(expectedBuf, receivedBuf);
 
   if (isValid) {
     return res.status(200).json({ verified: true, payment_id: razorpay_payment_id });

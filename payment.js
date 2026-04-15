@@ -1,14 +1,10 @@
 /**
- * payment.js — Razorpay integration (server-secured architecture)
- *
- * Flow:
- *  1. User clicks ₹99 → initPayment()
- *  2. POST /api/create-order  → server creates Razorpay order, returns order_id + key_id
- *  3. Browser opens Razorpay checkout with order_id
- *  4. After payment: POST /api/verify-payment → server verifies HMAC signature
- *  5. If verified: activatePremium()
- *
- * The Key Secret never touches the browser.
+ * payment.js — Razorpay integration for one-time ₹99 premium unlock.
+ * Secure flow:
+ *   1. POST /api/create-order  → server creates order with fixed amount, returns order_id + key_id
+ *   2. Razorpay modal opens with order_id (amount cannot be tampered client-side)
+ *   3. On success → POST /api/verify-payment with HMAC signature
+ *   4. Only if server confirms verified → activatePremium()
  */
 'use strict';
 
@@ -24,12 +20,12 @@ function isUnlocked() {
   }
 }
 
-/** Activate premium (call only after server-verified payment) */
+/** Activate premium — only called after server-side signature verification */
 function activatePremium(paymentId) {
   const expiryDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
   localStorage.setItem(PREMIUM_KEY, JSON.stringify({
     unlocked:  true,
-    paymentId: paymentId || 'manual',
+    paymentId: paymentId,
     expiry:    expiryDate.toISOString(),
   }));
   if (window.renderChartPage) window.renderChartPage();
@@ -46,74 +42,78 @@ function activatePremium(paymentId) {
   });
 }
 
-/** Main payment entry point */
-async function initPayment() {
+/** Step 3: Verify payment on server before granting access */
+async function verifyPayment(orderId, paymentId, signature) {
+  const res = await fetch('/api/verify-payment', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({
+      razorpay_order_id:   orderId,
+      razorpay_payment_id: paymentId,
+      razorpay_signature:  signature,
+    }),
+  });
+  const data = await res.json();
+  return data.verified === true;
+}
+
+/** Load Razorpay script and open payment modal */
+function initPayment() {
   if (isUnlocked()) {
     window.showToast && window.showToast('Premium is already active!', 'success');
     return;
   }
 
-  // Step 1: Create order server-side (amount is fixed there — cannot be tampered)
-  let orderData;
-  try {
-    const res = await fetch('/api/create-order', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    orderData = await res.json();
-  } catch (err) {
-    console.error('Order creation failed:', err);
-    window.showToast && window.showToast('Payment service unavailable. Please try again.', '');
-    return;
-  }
+  // Step 1: Create order on server (amount fixed server-side)
+  async function createOrderAndOpen() {
+    let orderData;
+    try {
+      const res = await fetch('/api/create-order', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!res.ok) throw new Error('Order creation failed');
+      orderData = await res.json();
+    } catch (err) {
+      console.error('Create order error:', err);
+      window.showToast && window.showToast('Payment service unavailable. Please try again later.', '');
+      return;
+    }
 
-  // Step 2: Open Razorpay checkout
-  function openCheckout() {
     const urlData = window.Share?.getBirthDataFromURL?.() || {};
+    const name    = urlData.n || '';
 
+    // Step 2: Open Razorpay with server-issued order_id
     const options = {
-      key:      orderData.key_id,       // Returned from server — no key in this file
-      amount:   orderData.amount,       // ₹99 in paise, set server-side
-      currency: orderData.currency,
-      order_id: orderData.order_id,     // Required for signature verification
+      key:         orderData.key_id,
+      amount:      orderData.amount,
+      currency:    orderData.currency,
+      order_id:    orderData.order_id,
       name:        'Jathagam.app',
       description: 'Premium Unlock — Full Birth Chart',
       image:       '/assets/logo.svg',
-
       handler: async function(response) {
-        // Step 3: Verify payment signature on the server
+        // Step 3: Verify signature server-side before unlocking
         try {
-          const vRes = await fetch('/api/verify-payment', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id:   response.razorpay_order_id,
-              razorpay_signature:  response.razorpay_signature,
-            }),
-          });
-          const vData = await vRes.json();
-
-          if (vData.verified) {
+          const verified = await verifyPayment(
+            response.razorpay_order_id,
+            response.razorpay_payment_id,
+            response.razorpay_signature,
+          );
+          if (verified) {
             activatePremium(response.razorpay_payment_id);
           } else {
             window.showToast && window.showToast('Payment verification failed. Contact support.', '');
           }
         } catch (err) {
-          console.error('Verification error:', err);
-          window.showToast && window.showToast('Could not verify payment. Contact support.', '');
+          console.error('Verify payment error:', err);
+          window.showToast && window.showToast('Verification error. Contact support with payment ID: ' + response.razorpay_payment_id, '');
         }
       },
-
-      prefill: {
-        name:    urlData.n || '',
-        email:   '',
-        contact: '',
-      },
-      notes:  { source: 'jathagam.app' },
-      theme:  { color: '#B8471B' },
-      modal: {
+      prefill: { name, email: '', contact: '' },
+      notes:   { source: 'jathagam.app' },
+      theme:   { color: '#B8471B' },
+      modal:   {
         ondismiss: function() {
           window.showToast && window.showToast('Payment cancelled.', '');
         },
@@ -133,32 +133,35 @@ async function initPayment() {
     }
   }
 
-  // Lazy-load Razorpay SDK
+  // Lazy-load Razorpay script, then start flow
   if (window.Razorpay) {
-    openCheckout();
+    createOrderAndOpen();
   } else {
-    const script   = document.createElement('script');
-    script.src     = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload  = openCheckout;
-    script.onerror = function() {
+    const script    = document.createElement('script');
+    script.src      = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload   = createOrderAndOpen;
+    script.onerror  = function() {
       window.showToast && window.showToast('Failed to load payment gateway. Check your connection.', '');
     };
     document.head.appendChild(script);
   }
 }
 
-/** Show premium lock overlay on a container */
+/**
+ * Show premium lock overlay on a container.
+ */
 function showPremiumLock(containerId, featureName) {
   const el = document.getElementById(containerId);
   if (!el || isUnlocked()) return;
 
-  const wrap  = document.createElement('div');
+  const wrap = document.createElement('div');
   wrap.className = 'premium-blur-wrap';
 
+  // Blur the existing content
   const inner = document.createElement('div');
-  inner.style.filter       = 'blur(5px)';
+  inner.style.filter = 'blur(5px)';
   inner.style.pointerEvents = 'none';
-  inner.style.userSelect    = 'none';
+  inner.style.userSelect = 'none';
   while (el.firstChild) inner.appendChild(el.firstChild);
   wrap.appendChild(inner);
 

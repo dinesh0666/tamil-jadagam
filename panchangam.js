@@ -68,15 +68,41 @@ window.Panchangam = (() => {
   const VAARAM = ['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'];
   const VAARAM_PLANET = ['☀','☽','♂','☿','♃','♀','♄'];
 
-  /* ── Muhurta slot indices (1-8, slot 1 = first 1.5 hr after sunrise) ─
-     Rahu Kalam verified against standard Tamil almanac:
-     Thu = 1:30-3:00 PM → slot 6. Ema Thu = 6:00-7:30 AM → slot 1.     */
+  /* ── Muhurta slot indices (1-8, each = 1/8 of daytime from sunrise) ──
+     Rahu Kalam verified against standard Tamil almanac:               */
   const RAHU_SLOT = [8, 2, 7, 5, 6, 4, 3]; // Sun Mon Tue Wed Thu Fri Sat
   const EMA_SLOT  = [5, 4, 3, 2, 1, 7, 6]; // Yamakanda
   const KULI_SLOT = [7, 6, 5, 4, 3, 2, 1]; // Kuligai
 
-  /* ── Nalla Neram slot pairs [morning, evening] ─────────────────────── */
-  const NALLA_SLOTS = [[4,7],[2,6],[5,7],[3,6],[4,6],[1,2],[3,6]];
+  /* ── Nakshatra ruling lords (repeating 9-planet cycle, 27 stars) ──── */
+  const NAK_LORD = [
+    'கேது','சுக்கிரன்','சூரியன்','சந்திரன்','செவ்வாய்','ராகு','குரு','சனி','புதன்',
+    'கேது','சுக்கிரன்','சூரியன்','சந்திரன்','செவ்வாய்','ராகு','குரு','சனி','புதன்',
+    'கேது','சுக்கிரன்','சூரியன்','சந்திரன்','செவ்வாய்','ராகு','குரு','சனி','புதன்',
+  ];
+
+  /* ── Yogam quality (27 yogas — inauspicious ones flagged) ─────────── */
+  // Inauspicious: Vishkamba(0), Atiganda(5), Shula(8), Ganda(9), Vyaghata(12),
+  //               Vajra(14), Vyatipata(16), Parigha(18), Vaidhriti(26)
+  const YOGAM_QUALITY = [
+    'bad','good','good','good','good',
+    'bad','good','good','bad','bad',
+    'good','good','bad','good','bad',
+    'good','bad','good','bad','good',
+    'good','good','good','good','good',
+    'good','bad',
+  ];
+
+  /* ── Planetary Hora system (Chaldean order) ────────────────────────── */
+  // Sequence used to assign planetary hours starting from sunrise each day
+  const HORA_PLANET    = ['Sun','Venus','Mercury','Moon','Saturn','Jupiter','Mars'];
+  // Index of first hora lord for each weekday (0=Sun … 6=Sat) in HORA_PLANET
+  const HORA_DAY_START = [0, 3, 6, 2, 5, 1, 4];
+
+  /* ── Chennai fallback sunrise/sunset by month (IST decimal hours) ─── */
+  // Used only when lat/lon not supplied
+  const SR_DEFAULT = [6.42,6.38,6.22,6.07,5.97,5.87,5.97,6.08,6.17,6.17,6.25,6.53];
+  const SS_DEFAULT = [17.97,18.03,18.12,18.25,18.38,18.42,18.37,18.22,17.95,17.72,17.62,17.78];
 
   /* ── Muhurta (auspicious day) criteria ────────────────────────────── */
   // Nakshatras: Rohini(3), Mrigasira(4), Hasta(12), Chitra(13), Swati(14),
@@ -139,9 +165,91 @@ window.Panchangam = (() => {
     'துலாம்','விருச்சிகம்','தனுசு','மகரம்','கும்பம்','மீனம்',
   ];
 
-  /* ── Approx Chennai sunrise/sunset by month (IST decimal hours) ───── */
-  const SR = [6.42,6.38,6.22,6.07,5.97,5.87,5.97,6.08,6.17,6.17,6.25,6.53];
-  const SS = [17.97,18.03,18.12,18.25,18.38,18.42,18.37,18.22,17.95,17.72,17.62,17.78];
+  /* ── Astronomical sunrise/sunset (NOAA algorithm) ────────────────── */
+  /**
+   * Calculate local sunrise and sunset times.
+   * @param {number} latDeg  latitude  (positive = north)
+   * @param {number} lonDeg  longitude (positive = east)
+   * @param {Date}   date
+   * @param {number} tzHr   timezone offset in decimal hours (e.g. 5.5 for IST)
+   * @returns {{ sunrise: number, sunset: number }} decimal hours after midnight local time
+   */
+  function calcSunriseSunset(latDeg, lonDeg, date, tzHr) {
+    const y = date.getFullYear(), mo = date.getMonth() + 1, d = date.getDate();
+    const jdNoon = toJD(y, mo, d, 12 - tzHr);
+    const t = (jdNoon - 2451545.0) / 36525;
+
+    // Sun's mean longitude and anomaly
+    const L0 = norm360(280.46646 + 36000.76983 * t);
+    const M  = norm360(357.52911 + 35999.05029 * t - 0.0001537 * t * t);
+    const C  = (1.914602 - 0.004817 * t - 0.000014 * t * t) * sin(M)
+             + (0.019993 - 0.000101 * t) * sin(2 * M)
+             + 0.000289 * sin(3 * M);
+    const sunTrueLon = norm360(L0 + C);
+    const omega      = 125.04 - 1934.136 * t;
+    const lambdaDeg  = sunTrueLon - 0.00569 - 0.00478 * sin(omega);
+
+    // Obliquity and declination
+    const epsDeg  = 23.439291111 - 0.013004167 * t + 0.00256 * cos(omega);
+    const deltaDeg = Math.asin(sin(epsDeg) * sin(lambdaDeg)) * DEG;
+
+    // Equation of time (minutes)
+    const e  = 0.016708634 - 0.000042037 * t;
+    const y2 = Math.tan((epsDeg * RAD) / 2) ** 2;
+    const EqTmin = 4 * (y2 * sin(2 * L0 * RAD)
+      - 2 * e * sin(M * RAD)
+      + 4 * e * y2 * sin(M * RAD) * cos(2 * L0 * RAD)
+      - 0.5 * y2 * y2 * sin(4 * L0 * RAD)
+      - 1.25 * e * e * sin(2 * M * RAD));
+
+    // Longitude correction (minutes) from standard meridian
+    const lonCorrMin = (lonDeg - 15 * tzHr) * 4;
+
+    // Solar noon in local time (hours)
+    const solarNoon = 12 - EqTmin / 60 - lonCorrMin / 60;
+
+    // Hour angle — 90.833° accounts for atmospheric refraction + solar disc radius
+    const cosHA = (cos(90.833) - sin(latDeg) * sin(deltaDeg)) / (cos(latDeg) * cos(deltaDeg));
+    if (cosHA > 1 || cosHA < -1) {
+      // Polar day/night fallback
+      const mIdx = date.getMonth();
+      return { sunrise: SR_DEFAULT[mIdx], sunset: SS_DEFAULT[mIdx] };
+    }
+
+    const HA = Math.acos(cosHA) * DEG;
+    return {
+      sunrise: solarNoon - HA / 15,
+      sunset:  solarNoon + HA / 15,
+    };
+  }
+
+  /* ── Hora (planetary hour) times for a given day ──────────────────── */
+  /**
+   * Returns the 12 daytime hora objects: { planet, start, end } in decimal hours.
+   * Daytime is divided into 12 equal horas from sunrise to sunset.
+   */
+  function calcHoras(dow, sunriseH, sunsetH) {
+    const dayLen  = sunsetH - sunriseH;  // hours
+    const horaLen = dayLen / 12;          // each hora length
+    const startIdx = HORA_DAY_START[dow];
+    const horas = [];
+    for (let i = 0; i < 12; i++) {
+      horas.push({
+        planet: HORA_PLANET[(startIdx + i) % 7],
+        start:  sunriseH + i * horaLen,
+        end:    sunriseH + (i + 1) * horaLen,
+      });
+    }
+    return horas;
+  }
+
+  /** Get time windows for a specific hora planet (max 2 windows, daytime only) */
+  function getHoraTimes(horas, planet) {
+    return horas
+      .filter(h => h.planet === planet)
+      .slice(0, 2)
+      .map(h => `${formatHM(h.start)} – ${formatHM(h.end)}`);
+  }
 
   /* ── Helpers ──────────────────────────────────────────────────────── */
   function formatHM(h) {
@@ -250,35 +358,44 @@ window.Panchangam = (() => {
   }
 
   /* ── Main calculation ─────────────────────────────────────────────── */
-  function calculate(date) {
+  /**
+   * @param {Date}   date
+   * @param {number} [lat=13.0827] Latitude  (default: Chennai)
+   * @param {number} [lon=80.2707] Longitude (default: Chennai)
+   * @param {number} [tz=5.5]     Timezone offset in hours (default: IST)
+   */
+  function calculate(date, lat, lon, tz) {
+    lat = (lat != null) ? lat : 13.0827;
+    lon = (lon != null) ? lon : 80.2707;
+    tz  = (tz  != null) ? tz  : 5.5;
+
     const y = date.getFullYear(), mo = date.getMonth() + 1, d = date.getDate();
-    // Panchangam is traditionally computed at sunrise (≈ 6:00 AM IST = 0.5 UT)
+    // Panchangam computed at sunrise (≈0.5 UT for IST)
     const jd  = toJD(y, mo, d, 0.5);
     const dow = date.getDay();
-    const mIdx = date.getMonth(); // 0–11
 
     // Sidereal longitudes (Lahiri)
     const ayan     = getLahiriAyanamsa(jd);
     const sunLong  = norm360(getSunLon(jd)  - ayan);
     const moonLong = norm360(getMoonLon(jd) - ayan);
 
-    // Tamil solar month & date within it (Sun moves ~1°/day)
+    // Tamil solar month & date within it
     const monthIdx  = Math.floor(sunLong / 30) % 12;
     const tamilDate = Math.floor(sunLong % 30) + 1;
 
-    // Tithi: Moon – Sun angle / 12°
+    // Tithi
     const tithiAngle = norm360(moonLong - sunLong);
-    const tithiNum   = Math.floor(tithiAngle / 12);      // 0–29
+    const tithiNum   = Math.floor(tithiAngle / 12);  // 0–29
     const paksha     = tithiNum < 15 ? 0 : 1;
     const tithiIdx   = tithiNum % 15;
     const tithi      = (paksha === 0 ? SUKLA_TITHI : KRISHNA_TITHI)[tithiIdx];
 
     // Nakshatra & Pada
-    const NAK_SPAN   = 360 / 27;
-    const nakIdx     = Math.floor(moonLong / NAK_SPAN) % 27;
-    const pada       = Math.floor((moonLong % NAK_SPAN) / (NAK_SPAN / 4)) + 1;
+    const NAK_SPAN = 360 / 27;
+    const nakIdx   = Math.floor(moonLong / NAK_SPAN) % 27;
+    const pada     = Math.floor((moonLong % NAK_SPAN) / (NAK_SPAN / 4)) + 1;
 
-    // Transition times (binary search — runs at selection time, not for every cell)
+    // Transition end times (binary search)
     const tithiEndJD   = findTithiEnd(date, tithiNum);
     const tithiEndTime = tithiEndJD ? jdToIST(tithiEndJD) : null;
     const nextTNum     = (tithiNum + 1) % 30;
@@ -288,41 +405,53 @@ window.Panchangam = (() => {
     const nextNak    = NAK[(nakIdx + 1) % 27];
 
     // Special day flags
-    const isPournami = tithiNum === 14;  // Shukla 15 = Full Moon
-    const isAmavasai = tithiNum === 29;  // Krishna 15 = New Moon
+    const isPournami = tithiNum === 14;
+    const isAmavasai = tithiNum === 29;
     const isMuhurat  = paksha === 0 && !isPournami
       && MUHURTA_TITHI.includes(tithiIdx)
       && MUHURTA_NAK.includes(nakIdx)
       && MUHURTA_DOW.includes(dow);
 
-    // Yogam: (Sun + Moon) / (360/27)
-    const yogamIdx = Math.floor(norm360(sunLong + moonLong) / NAK_SPAN) % 27;
+    // Yogam
+    const yogamIdx     = Math.floor(norm360(sunLong + moonLong) / NAK_SPAN) % 27;
+    const yogamQuality = YOGAM_QUALITY[yogamIdx];
 
-    // Karanam (half-tithi, every 6°)
-    const karaNum = Math.floor(tithiAngle / 6); // 0–59
+    // Karanam
+    const karaNum = Math.floor(tithiAngle / 6);
     let karanam;
-    if      (karaNum === 0)  karanam = KARA_FIXED[3]; // Kimstughna (fixed, 1st)
+    if      (karaNum === 0)  karanam = KARA_FIXED[3];
     else if (karaNum >= 57)  karanam = KARA_FIXED[karaNum - 57];
     else                     karanam = KARA_MOVABLE[(karaNum - 1) % 7];
 
-    // Chandrashtamam: rasi whose natal moon has today's moon in its 8th house
+    // Chandrashtamam
     const chandraMoonRasiIdx = Math.floor(moonLong / 30) % 12;
     const chandraRasiIdx     = (chandraMoonRasiIdx - 7 + 12) % 12;
     const chandrashtamam     = RASI_TA[chandraRasiIdx];
     const chandrashtamamNak  = RASI_NAK_STR[chandraRasiIdx];
 
-    // Auspicious/inauspicious times
-    const sunriseH = SR[mIdx];
-    const sunsetH  = SS[mIdx];
-    const slotLen  = (sunsetH - sunriseH) / 8;
+    // ── Sunrise / Sunset (astronomical) ──────────────────────────────────
+    const ss       = calcSunriseSunset(lat, lon, date, tz);
+    const sunriseH = ss.sunrise;
+    const sunsetH  = ss.sunset;
+    const slotLen  = (sunsetH - sunriseH) / 8;  // each of 8 day segments
 
-    const [nallaM, nallaE] = NALLA_SLOTS[dow];
+    // ── Rahu Kalam, Ema Gandam, Kuligai ──────────────────────────────────
+    const rahuKalam = slotToTime(RAHU_SLOT[dow], sunriseH, slotLen);
+    const emaGanda  = slotToTime(EMA_SLOT[dow],  sunriseH, slotLen);
+    const kuligai   = slotToTime(KULI_SLOT[dow], sunriseH, slotLen);
+
+    // ── Nalla Neram (Jupiter horas) & Gowri Nalla Neram (Moon horas) ─────
+    const horas           = calcHoras(dow, sunriseH, sunsetH);
+    const nallaNeramTimes = getHoraTimes(horas, 'Jupiter');  // up to 2 windows
+    const gowriNeramTimes = getHoraTimes(horas, 'Moon');     // up to 2 windows
+    const nallaNeram  = nallaNeramTimes[0] || '—';
+    const gowriNeram  = gowriNeramTimes[0] || '—';
 
     // Calendar info
-    const hijriDate  = toHijri(date);
-    const shakaDate  = getShaka(date);
-    const dayInfo    = getDayOfYear(date);
-    const rasiPalan  = getRasiPalan(chandraMoonRasiIdx);
+    const hijriDate = toHijri(date);
+    const shakaDate = getShaka(date);
+    const dayInfo   = getDayOfYear(date);
+    const rasiPalan = getRasiPalan(chandraMoonRasiIdx);
 
     return {
       date,
@@ -332,6 +461,7 @@ window.Panchangam = (() => {
       vaaram:       VAARAM[dow],
       vaaramPlanet: VAARAM_PLANET[dow],
       nakshatra:    NAK[nakIdx],
+      nakLord:      NAK_LORD[nakIdx],
       nakPada:      pada,
       nakEndTime,
       nextNak,
@@ -341,18 +471,23 @@ window.Panchangam = (() => {
       tithiEndTime,
       nextTithi,
       yogam:        YOGAM[yogamIdx],
+      yogamQuality,
       karanam,
       chandrashtamam,
       chandrashtamamNak,
-      rahuKalam:    slotToTime(RAHU_SLOT[dow], sunriseH, slotLen),
-      emaGanda:     slotToTime(EMA_SLOT[dow],  sunriseH, slotLen),
-      kuligai:      slotToTime(KULI_SLOT[dow], sunriseH, slotLen),
-      nallaNeram:   slotToTime(nallaM, sunriseH, slotLen),
-      gowriNeram:   slotToTime(nallaE, sunriseH, slotLen),
+      rahuKalam,
+      emaGanda,
+      kuligai,
+      nallaNeram,
+      nallaNeramTimes,
+      gowriNeram,
+      gowriNeramTimes,
       soolam:       SOOLAM[dow],
       soolamRemedy: SOOLAM_REMEDY[dow],
       sunrise:      formatHM(sunriseH),
       sunset:       formatHM(sunsetH),
+      sunriseH,
+      sunsetH,
       isPournami,
       isAmavasai,
       isMuhurat,
@@ -383,5 +518,5 @@ window.Panchangam = (() => {
     return { isPournami, isAmavasai, isMuhurat };
   }
 
-  return { calculate, getDayFlags, TAMIL_MONTHS, VAARAM, RASI_TA };
+  return { calculate, getDayFlags, calcSunriseSunset, TAMIL_MONTHS, VAARAM, RASI_TA };
 })();
