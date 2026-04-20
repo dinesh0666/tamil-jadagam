@@ -12,6 +12,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Google AdSense — replace ca-pub-XXXXXXXXXXXXXXXX with your Publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+    // Track premium purchase conversions
+    window._trackPremiumPurchase = function(paymentId) {
+      gtag('event', 'purchase', { transaction_id: paymentId, value: 99, currency: 'INR', items: [{ item_id: 'premium_lifetime', item_name: 'Premium Lifetime', price: 99 }] });
+    };
+  </script>
 </head>
 <body lang="ta">
 
@@ -23,6 +39,7 @@
   <a href="index.html" class="nav-brand">Jathagam ✦</a>
   <div class="nav-actions">
     <a href="panchangam.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Tamil Panchangam">📅</a>
+    <a href="compatibility.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Kundali Matching">💞</a>
     <button class="lang-btn active" data-lang="ta" onclick="setLanguage('ta')" aria-label="Tamil">தமிழ்</button>
     <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
     <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')" aria-label="Hindi">हि</button>
