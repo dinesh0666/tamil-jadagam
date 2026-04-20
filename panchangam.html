@@ -214,6 +214,40 @@ let calMonth = new Date().getMonth(); // 0-based
 let selectedDate = new Date();
 selectedDate.setHours(0,0,0,0);
 
+// Default location: Chennai
+let currentLat = 13.0827, currentLon = 80.2707, currentTz = 5.5;
+
+/* ── calc() — wrapper for Panchangam.calculate with current state ─── */
+function calc() {
+  return Panchangam.calculate(selectedDate, currentLat, currentLon, currentTz);
+}
+
+/* ── Location helpers ───────────────────────────────────────────────── */
+function changeLocation(val) {
+  const parts = val.split('|');
+  currentLat = parseFloat(parts[0]);
+  currentLon = parseFloat(parts[1]);
+  currentTz  = parseFloat(parts[2]);
+  renderDetail(calc());
+}
+
+function useGPSLocation() {
+  if (!navigator.geolocation) {
+    alert('Geolocation not supported by your browser.');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      currentLat = pos.coords.latitude;
+      currentLon = pos.coords.longitude;
+      // Estimate tz from longitude (rough — user can change via select)
+      currentTz  = Math.round(currentLon / 15 * 2) / 2;
+      renderDetail(calc());
+    },
+    () => alert('Unable to get location. Please select from the dropdown.')
+  );
+}
+
 const MONTHS_TA = ['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்',
                    'ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'];
 
