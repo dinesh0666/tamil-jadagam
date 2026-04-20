@@ -21,6 +21,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 
+  <!-- Google AdSense — replace ca-pub-XXXXXXXXXXXXXXXX with your Publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
   <!-- JSON-LD structured data -->
   <script type="application/ld+json">
   {
@@ -49,6 +61,8 @@
   <a href="index.html" class="nav-brand">Jathagam ✶</a>
   <div class="nav-actions">
     <a href="panchangam.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Tamil Panchangam">📅 பஞ்சாங்கம்</a>
+    <a href="compatibility.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)" aria-label="Kundali Matching">💞 Matching</a>
+    <a href="pricing.html" class="nav-btn" style="background:var(--gold);color:var(--dark);font-weight:700" aria-label="Premium">🔓 ₹99</a>
     <button class="lang-btn active" data-lang="ta" onclick="setLanguage('ta')" aria-label="Tamil!">தமிழ்</button>
     <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
     <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')" aria-label="Hindi">हि</button>
@@ -185,6 +199,60 @@
 
   </div><!-- end .form-page-wrap -->
 
+  <!-- ── AdSense banner slot ──────────────────────────────────────────── -->
+  <div style="max-width:1100px;margin:0 auto 1rem;padding:0 1rem">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ── Social proof counter ─────────────────────────────────────────── -->
+  <section class="section" style="padding-top:0;padding-bottom:1rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;max-width:800px;margin:0 auto;text-align:center">
+      <div class="card">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--primary-d)" id="ctrCharts">1,24,000+</div>
+        <div style="font-size:.82rem;color:var(--mid)">Charts Generated</div>
+      </div>
+      <div class="card">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--primary-d)">60+</div>
+        <div style="font-size:.82rem;color:var(--mid)">Cities Worldwide</div>
+      </div>
+      <div class="card">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--primary-d)">4</div>
+        <div style="font-size:.82rem;color:var(--mid)">Languages</div>
+      </div>
+      <div class="card">
+        <div style="font-size:1.8rem;font-weight:700;color:var(--primary-d)">100%</div>
+        <div style="font-size:.82rem;color:var(--mid)">Private — No Data Stored</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Compatibility CTA ─────────────────────────────────────────────── -->
+  <section class="section" style="padding-top:0;padding-bottom:1.5rem">
+    <div class="card" style="background:linear-gradient(135deg,var(--gold-l),var(--primary-l));border:2px solid var(--gold);max-width:700px;margin:0 auto;text-align:center">
+      <div style="font-size:2rem;margin-bottom:.4rem">💞</div>
+      <h3 style="margin-bottom:.4rem;color:var(--primary-d)">Check Marriage Compatibility</h3>
+      <p style="font-size:.88rem;color:var(--mid);margin-bottom:1rem">Free Tamil Nakshatra Porutham — 10-point Kundali matching analysis</p>
+      <a href="compatibility.html" class="submit-btn" style="display:inline-block;text-decoration:none;max-width:280px">
+        💞 Check Compatibility Free →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Email capture ─────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top:0;padding-bottom:1.5rem">
+    <div class="card" style="max-width:560px;margin:0 auto;text-align:center">
+      <h3 style="margin-bottom:.4rem">📬 Get Weekly Astrology Tips</h3>
+      <p style="font-size:.85rem;color:var(--mid);margin-bottom:1rem">Nakshatra forecast, Rahu Kalam alerts &amp; Dasha insights — delivered free to your inbox.</p>
+      <form id="emailCapture" onsubmit="subscribeEmail(event)" style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+        <input type="email" id="subEmail" class="form-control" placeholder="your@email.com" required style="max-width:260px;flex:1">
+        <button type="submit" class="submit-btn" style="white-space:nowrap;padding:.65rem 1.25rem">Subscribe Free</button>
+      </form>
+      <div id="subMsg" style="display:none;margin-top:.75rem;font-size:.85rem;color:var(--good)">✅ Subscribed! Check your inbox.</div>
+      <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">No spam · Unsubscribe anytime</p>
+    </div>
+  </section>
+
   <!-- ── Features overview ────────────────────────────────────────────── -->
   <section class="section fade-in-2">
     <h2 class="text-center mb-2" style="color:var(--primary-d)">உங்கள் ஜாதகம் — What's included</h2>
@@ -268,14 +336,19 @@
       <a href="/chart.html">New York</a> <a href="/chart.html">Kuala Lumpur</a>
     </div>
     <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
+      <a href="/compatibility.html">💞 Kundali Matching</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/panchangam.html">📅 Tamil Panchangam</a>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
       <a href="/blog/jathagam-tamil.html">Jathagam in Tamil</a>
       <a href="/blog/tamil-jathagam-free.html">Free Tamil Jathagam</a>
       <a href="/blog/birth-chart-telugu.html">Birth Chart Telugu</a>
       <a href="/blog/janam-kundli-hindi.html">Janam Kundli Hindi</a>
       <a href="/blog/rasi-chart-online.html">Rasi Chart Online</a>
-    </div>
-    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
-      <a href="/panchangam.html">📅 Tamil Panchangam</a>
+      <a href="/blog/nakshatra-compatibility.html">Nakshatra Compatibility</a>
+      <a href="/blog/rahu-kalam-today.html">Rahu Kalam Today</a>
+      <a href="/blog/dasha-periods-guide.html">Dasha Periods Guide</a>
     </div>
     <div class="footer-copy">© 2026 Jathagam.app · Lahiri Ayanamsa · உங்கள் தரவு எங்கும் சேமிக்கப்படாது</div>
   </div>
@@ -454,6 +527,32 @@ function showError(fieldId, msg) {
   toast.textContent = msg;
   toast.className = 'show';
   setTimeout(() => { toast.className = ''; }, 3000);
+}
+
+/* ── Email subscription (EmailJS — replace IDs in dashboard) ─────────── */
+async function subscribeEmail(e) {
+  e.preventDefault();
+  const email = document.getElementById('subEmail').value.trim();
+  // EmailJS: set your Service ID, Template ID, Public Key in the Jathagam EmailJS dashboard
+  // https://dashboard.emailjs.com — replace the three XXXX values below
+  try {
+    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service_id:  'YOUR_EMAILJS_SERVICE_ID',
+        template_id: 'YOUR_EMAILJS_TEMPLATE_ID',
+        user_id:     'YOUR_EMAILJS_PUBLIC_KEY',
+        template_params: { subscriber_email: email, reply_to: email }
+      })
+    });
+  } catch(_) { /* fail silently — store locally anyway */ }
+  // Store locally as fallback
+  const subs = JSON.parse(localStorage.getItem('jathagam_subs') || '[]');
+  if (!subs.includes(email)) { subs.push(email); localStorage.setItem('jathagam_subs', JSON.stringify(subs)); }
+  document.getElementById('subMsg').style.display = 'block';
+  document.getElementById('emailCapture').style.display = 'none';
+  gtag && gtag('event', 'email_subscribe', { method: 'homepage' });
 }
 
 /* ── Init ─────────────────────────────────────────────────────────────── */

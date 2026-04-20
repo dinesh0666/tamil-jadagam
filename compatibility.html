@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kundali Matching Free — Tamil Star Compatibility | திருமண பொருத்தம்</title>
+  <meta name="description" content="Free Tamil Kundali matching by Nakshatra (star compatibility). Check marriage compatibility — Porutham, Guna Milan, Mangal dosha. Tamil, English, Hindi, Telugu.">
+  <meta name="keywords" content="kundali matching, star compatibility tamil, nakshatra porutham, jathagam porutham, marriage compatibility tamil, திருமண பொருத்தம், nakshatram porutham">
+  <meta property="og:title" content="Free Kundali Matching — Tamil Star Compatibility">
+  <meta property="og:description" content="Check Tamil marriage compatibility by Nakshatra. 10-point Porutham analysis, Guna score, Mangal Dosha check — free online.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jathagam.app/compatibility">
+  <link rel="canonical" href="https://jathagam.app/compatibility">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#B8471B">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tamil Kundali Matching",
+    "url": "https://jathagam.app/compatibility",
+    "description": "Free Tamil Kundali matching by Nakshatra — 10-point Porutham analysis",
+    "applicationCategory": "Lifestyle"
+  }
+  </script>
+  <style>
+    .compat-form-wrap { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+    @media(max-width:640px){ .compat-form-wrap { grid-template-columns:1fr; } }
+    .person-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; border-top:4px solid var(--primary); }
+    .person-card.bride { border-top-color:var(--gold); }
+    .person-card h3 { margin-bottom:1rem; font-size:1rem; }
+    .result-wrap { display:none; }
+    .score-ring { width:120px; height:120px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 1rem; font-family:'Cinzel',serif; }
+    .score-ring.excellent { background:conic-gradient(var(--good) 0% var(--pct,70%), var(--bg3) var(--pct,70%) 100%); }
+    .score-ring.good      { background:conic-gradient(var(--gold) 0% var(--pct,50%), var(--bg3) var(--pct,50%) 100%); }
+    .score-ring.average   { background:conic-gradient(var(--warn) 0% var(--pct,40%), var(--bg3) var(--pct,40%) 100%); }
+    .score-inner { width:88px; height:88px; border-radius:50%; background:var(--card); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .score-num  { font-size:1.8rem; font-weight:700; line-height:1; }
+    .score-denom{ font-size:.75rem; color:var(--mid); }
+    .porutham-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:.75rem; margin:1.5rem 0; }
+    .porutham-item { background:var(--card); border-radius:var(--radius); padding:.9rem 1rem; display:flex; align-items:center; gap:.75rem; box-shadow:var(--shadow); }
+    .porutham-item .p-icon { font-size:1.4rem; flex-shrink:0; }
+    .porutham-item .p-name { font-size:.85rem; font-weight:600; color:var(--dark); }
+    .porutham-item .p-result { font-size:.78rem; margin-top:.1rem; }
+    .porutham-item.pass { border-left:4px solid var(--good); }
+    .porutham-item.fail { border-left:4px solid var(--bad); }
+    .porutham-item.avg  { border-left:4px solid var(--gold); }
+    .nak-select { appearance:none; }
+    .ad-slot { background:var(--bg2); border-radius:var(--radius); min-height:90px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.8rem; margin:1.5rem 0; border:1px dashed var(--bg3); }
+    .premium-compat { background:linear-gradient(135deg,var(--gold-l),var(--primary-l)); border:2px solid var(--gold); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-top:1.5rem; }
+  </style>
+</head>
+<body lang="ta">
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-brand">Jathagam ✶</a>
+  <div class="nav-actions">
+    <a href="index.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)">🔮 ஜாதகம்</a>
+    <a href="panchangam.html" class="nav-btn" style="background:var(--primary-l);color:var(--primary-d)">📅 பஞ்சாங்கம்</a>
+    <a href="pricing.html" class="nav-btn" style="background:var(--gold);color:var(--dark);font-weight:700">🔓 Premium</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content container">
+    <div class="hero-badge">✦ திருமண பொருத்தம் · Kundali Matching ✦</div>
+    <h1>Star Compatibility — பொருத்தம்</h1>
+    <p class="hero-subtitle">Free Tamil Nakshatra Porutham · 10-Point Match Analysis</p>
+    <div class="hero-features">
+      <span class="hero-chip">⭐ Nakshatra Match</span>
+      <span class="hero-chip">📊 Guna Score</span>
+      <span class="hero-chip">⚡ Mangal Dosha</span>
+      <span class="hero-chip">🆓 Free Basic</span>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="container" style="padding-top:2rem;padding-bottom:3rem">
+
+  <!-- AdSense slot -->
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="compat-form-wrap">
+    <!-- Groom -->
+    <div class="person-card">
+      <h3>🤵 Groom / மணமகன்</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>பெயர் (Name)</label>
+          <input type="text" id="g-name" class="form-control" placeholder="Groom's name">
+        </div>
+        <div class="form-group">
+          <label>நட்சத்திரம் (Nakshatra)</label>
+          <select id="g-nak" class="form-control nak-select"></select>
+        </div>
+        <div class="form-group">
+          <label>ராசி (Rasi)</label>
+          <select id="g-rasi" class="form-control nak-select"></select>
+        </div>
+      </div>
+    </div>
+    <!-- Bride -->
+    <div class="person-card bride">
+      <h3>👰 Bride / மணமகள்</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>பெயர் (Name)</label>
+          <input type="text" id="b-name" class="form-control" placeholder="Bride's name">
+        </div>
+        <div class="form-group">
+          <label>நட்சத்திரம் (Nakshatra)</label>
+          <select id="b-nak" class="form-control nak-select"></select>
+        </div>
+        <div class="form-group">
+          <label>ராசி (Rasi)</label>
+          <select id="b-rasi" class="form-control nak-select"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:2rem">
+    <button class="submit-btn" onclick="checkCompatibility()" style="max-width:360px">
+      பொருத்தம் பார் — Check Compatibility ✦
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div class="result-wrap" id="resultWrap">
+
+    <!-- Score ring -->
+    <div class="card text-center fade-in" style="margin-bottom:1.5rem">
+      <h2 style="margin-bottom:1.5rem" id="resultTitle">பொருத்தம் முடிவு</h2>
+      <div class="score-ring" id="scoreRing">
+        <div class="score-inner">
+          <div class="score-num" id="scoreNum">–</div>
+          <div class="score-denom">/36</div>
+        </div>
+      </div>
+      <div style="font-size:1.15rem;font-weight:700;margin-bottom:.5rem" id="scoreLabel"></div>
+      <div style="font-size:.9rem;color:var(--mid)" id="scoreDesc"></div>
+    </div>
+
+    <!-- 10 Porutham grid -->
+    <h3 style="margin-bottom:1rem">10 பொருத்தங்கள் — Ten Poruthams</h3>
+    <div class="porutham-grid" id="poruthamGrid"></div>
+
+    <!-- AdSense mid-result slot -->
+    <div class="ad-slot">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- Premium upsell -->
+    <div class="premium-compat" id="premiumUpsell">
+      <div style="font-size:2rem;margin-bottom:.5rem">🔒</div>
+      <h3 style="margin-bottom:.5rem;color:var(--primary-d)">Unlock Full Compatibility Report</h3>
+      <p style="font-size:.9rem;color:var(--mid);margin-bottom:1rem">Get detailed Guna Milan table, Mangal Dosha analysis, Rajju &amp; Vedha check, and a printable PDF compatibility report.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem">
+        <div style="background:var(--card);border-radius:8px;padding:.5rem 1rem;font-size:.85rem"><strong>✓</strong> Full Guna breakdown</div>
+        <div style="background:var(--card);border-radius:8px;padding:.5rem 1rem;font-size:.85rem"><strong>✓</strong> Mangal Dosha detail</div>
+        <div style="background:var(--card);border-radius:8px;padding:.5rem 1rem;font-size:.85rem"><strong>✓</strong> PDF export</div>
+        <div style="background:var(--card);border-radius:8px;padding:.5rem 1rem;font-size:.85rem"><strong>✓</strong> Both charts side-by-side</div>
+      </div>
+      <button class="submit-btn" onclick="window.Payment&&Payment.initPayment()" style="background:var(--gold);color:var(--dark);max-width:280px">
+        🔓 Unlock for ₹99
+      </button>
+    </div>
+
+    <!-- Share result -->
+    <div style="text-align:center;margin-top:1.5rem">
+      <button class="nav-btn" onclick="shareResult()" style="font-size:.95rem;padding:.5rem 1.5rem">
+        📤 Share Result on WhatsApp
+      </button>
+    </div>
+
+  </div><!-- end #resultWrap -->
+
+  <!-- FAQ -->
+  <section class="section fade-in-3">
+    <h2 class="mb-2">Frequently Asked Questions</h2>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <div class="card">
+        <div class="fw-bold">What is Porutham / Kundali Matching?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Porutham (பொருத்தம்) is Tamil astrology's method of checking marriage compatibility. It compares the Nakshatra (birth star) of the bride and groom across 10 dimensions — Dinam, Ganam, Mahendram, Sthree Dheerga, Yoni, Rasi, Rasi Athipathi, Rajju, Vedha, and Vashyam.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">What is a good Guna score?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Out of 36 gunas, a score of 18+ is considered acceptable, 24+ is good, and 30+ is excellent. Rajju and Vedha are considered non-negotiable — a match fails if either is negative.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">What is Mangal Dosha?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Mangal Dosha (செவ்வாய் தோஷம்) occurs when Mars is placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house. Traditionally, two Manglik partners cancel each other's dosha.</div>
+      </div>
+      <div class="card">
+        <div class="fw-bold">I don't know the exact Nakshatra — what to do?</div>
+        <div style="font-size:.9rem;margin-top:.35rem;color:var(--mid)">Generate a free Jathagam on our <a href="index.html">birth chart page</a> — it will tell you the exact Nakshatra from your birth date, time and city.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <h4>Jathagam ✦</h4>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.82rem">
+      <a href="/index.html">Free Jathagam</a>
+      <a href="/panchangam.html">Panchangam</a>
+      <a href="/compatibility.html">Compatibility</a>
+      <a href="/pricing.html">Pricing</a>
+    </div>
+    <div class="footer-copy">© 2026 Jathagam.app · Lahiri Ayanamsa · உங்கள் தரவு எங்கும் சேமிக்கப்படாது</div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script src="i18n.js"></script>
+<script src="payment.js"></script>
+<script>
+/* ── Data ──────────────────────────────────────────────────────────────── */
+const NAKSHATRAS = [
+  'Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu',
+  'Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta',
+  'Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha',
+  'Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada',
+  'Uttara Bhadrapada','Revati'
+];
+const RASIS = ['Mesha','Rishabha','Mithuna','Kataka','Simha','Kanya',
+               'Thula','Vrischika','Dhanu','Makara','Kumbha','Meena'];
+
+// Nakshatra → Gana (0=Deva, 1=Manushya, 2=Rakshasa)
+const GANA = [0,2,0,0,1,2,0,0,2,2,1,0,0,2,0,1,0,2,2,1,0,0,2,2,1,0,0];
+// Nakshatra → Yoni (animal) index 0-13
+const YONI = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,0,5,3,4,6,7,8,9,10,11,12,13,1];
+// Nakshatra → Rasi lord index
+const NAK_RASI = [0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,6,7,7,8,8,9,9,10,10,11,11,11];
+// Compatible yoni pairs
+const YONI_COMPAT = [[0,0],[1,7],[2,3],[4,12],[5,8],[6,9],[10,11],[13,13]];
+
+function buildSelects() {
+  ['g-nak','b-nak'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = NAKSHATRAS.map((n,i) => `<option value="${i}">${n}</option>`).join('');
+  });
+  ['g-rasi','b-rasi'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = RASIS.map((r,i) => `<option value="${i}">${r}</option>`).join('');
+  });
+}
+
+/* ── Porutham logic ──────────────────────────────────────────────────────*/
+function calcPorutham(gn, bn, gr, br) {
+  const results = [];
+
+  // 1. Dinam — count from groom's nak to bride's, check divisible by 3,5,7
+  const dinam = ((bn - gn + 27) % 27) + 1;
+  const dinamOk = [3,5,7].some(d => dinam % d === 0) || dinam === 1;
+  results.push({ name:'Dinam', icon:'📅', pass: dinamOk, desc: dinamOk ? 'Good health & longevity' : 'Health concerns' });
+
+  // 2. Ganam — same gana = excellent, Deva+Manushya = good, else bad
+  const ganaG = GANA[gn], ganaB = GANA[bn];
+  const ganaPass = ganaG === ganaB || (ganaG === 0 && ganaB === 1) || (ganaG === 1 && ganaB === 0);
+  const ganaLevel = ganaG === ganaB ? 'pass' : ganaPass ? 'avg' : 'fail';
+  results.push({ name:'Ganam', icon:'✨', pass: ganaPass, level: ganaLevel, desc: ganaG === ganaB ? 'Same Gana — Excellent' : ganaPass ? 'Compatible Gana' : 'Gana mismatch' });
+
+  // 3. Mahendram — count from groom's nak to bride's, div 4,7,10,13,16,19,22,25
+  const mahen = ((bn - gn + 27) % 27) + 1;
+  const mahenOk = [4,7,10,13,16,19,22,25].includes(mahen);
+  results.push({ name:'Mahendram', icon:'⭐', pass: mahenOk, desc: mahenOk ? 'Long life & prosperity' : 'Moderate' });
+
+  // 4. Sthree Dheerga — count from bride to groom > 7
+  const sthree = ((gn - bn + 27) % 27) + 1;
+  const sthreeOk = sthree > 7;
+  results.push({ name:'Sthree Dheerga', icon:'🌸', pass: sthreeOk, desc: sthreeOk ? 'Happiness & fortune' : 'May need remedies' });
+
+  // 5. Yoni — compatible yoni pairs
+  const yoniG = YONI[gn], yoniB = YONI[bn];
+  const yoniOk = yoniG === yoniB || YONI_COMPAT.some(p => (p[0]===yoniG&&p[1]===yoniB)||(p[1]===yoniG&&p[0]===yoniB));
+  results.push({ name:'Yoni', icon:'🦁', pass: yoniOk, desc: yoniOk ? 'Physical compatibility' : 'Yoni mismatch' });
+
+  // 6. Rasi — same rasi = avg, rasi distance matters
+  const rasiDist = Math.min((br-gr+12)%12, (gr-br+12)%12);
+  const rasiOk = [1,3,5,7,9,11].includes((br-gr+12)%12);
+  results.push({ name:'Rasi Porutham', icon:'♈', pass: rasiOk, level: rasiDist===0?'avg':'pass', desc: rasiOk ? 'Rasis are compatible' : 'Rasi tension' });
+
+  // 7. Rasi Athipathi — simplified: different Rasi lords
+  const lords = [2,3,4,0,1,5,3,2,4,6,6,4]; // simplified planet lords
+  const rathiOk = lords[gr] !== lords[br] || gr === br;
+  results.push({ name:'Rasi Athipathi', icon:'👑', pass: rathiOk, desc: rathiOk ? 'Compatible lords' : 'Same lord — attention needed' });
+
+  // 8. Rajju — critical! groups of Nakshatras, same group = fail
+  const rajjuGroups = [[0,7,14,21],[1,6,13,22,27],[2,5,12,23,26],[3,4,11,24,25],[8,9,10,15,16,17,18,19,20]];
+  const rajjuG = rajjuGroups.findIndex(g => g.includes(gn));
+  const rajjuB = rajjuGroups.findIndex(g => g.includes(bn));
+  const rajjuOk = rajjuG !== rajjuB;
+  results.push({ name:'Rajju', icon:'🔗', pass: rajjuOk, desc: rajjuOk ? 'No Rajju dosha' : '⚠️ Rajju dosha — critical!' });
+
+  // 9. Vedha — incompatible pairs
+  const vedhaPairs = [[0,17],[1,22],[2,19],[3,20],[4,21],[5,8],[6,13],[7,24],[9,16],[10,14],[11,15],[12,25],[18,26],[23,27]];
+  const vedhaFail = vedhaPairs.some(p => (p[0]===gn&&p[1]===bn)||(p[1]===gn&&p[0]===bn));
+  results.push({ name:'Vedha', icon:'⚡', pass: !vedhaFail, desc: !vedhaFail ? 'No Vedha dosha' : '⚠️ Vedha dosha — consult astrologer' });
+
+  // 10. Vashyam — simplified rasi-based attraction
+  const vashyam = [[4,3],[4,8],[8,2],[3,9],[2,1],[5,9],[6,10],[7,11],[0,11],[9,10],[10,6],[11,4]];
+  const vashOk = vashyam.some(p => (p[0]===gr&&p[1]===br)||(p[1]===gr&&p[0]===br)) || gr===br;
+  results.push({ name:'Vashyam', icon:'💞', pass: vashOk, desc: vashOk ? 'Mutual attraction' : 'Moderate attraction' });
+
+  return results;
+}
+
+function checkCompatibility() {
+  const gn = parseInt(document.getElementById('g-nak').value);
+  const bn = parseInt(document.getElementById('b-nak').value);
+  const gr = parseInt(document.getElementById('g-rasi').value);
+  const br = parseInt(document.getElementById('b-rasi').value);
+
+  const results = calcPorutham(gn, bn, gr, br);
+  const passCount = results.filter(r => r.pass).length;
+  // Guna score out of 36 (weighted)
+  const gunaWeights = [3,6,5,7,4,3,2,0,0,2];
+  let guna = 0;
+  results.forEach((r, i) => { if (r.pass) guna += gunaWeights[i] || 2; });
+  guna = Math.round((guna / 34) * 36);
+
+  // Display score ring
+  const pct = Math.round((guna / 36) * 100);
+  const ring = document.getElementById('scoreRing');
+  ring.style.background = `conic-gradient(${guna >= 24 ? 'var(--good)' : guna >= 18 ? 'var(--gold)' : 'var(--bad)'} 0% ${pct}%, var(--bg3) ${pct}% 100%)`;
+  document.getElementById('scoreNum').textContent = guna;
+
+  let label, desc;
+  if (guna >= 30)      { label = '🌟 உத்தமம் — Excellent Match!'; desc = 'Outstanding compatibility. Highly auspicious for marriage.'; }
+  else if (guna >= 24) { label = '✅ நல்லது — Good Match'; desc = 'Good compatibility. A happy union is likely.'; }
+  else if (guna >= 18) { label = '⚠️ சாதாரணம் — Average'; desc = 'Acceptable but consult an astrologer for full analysis.'; }
+  else                  { label = '❌ பொருந்தவில்லை — Poor Match'; desc = 'Significant doshas present. Detailed consultation recommended.'; }
+
+  document.getElementById('scoreLabel').textContent = label;
+  document.getElementById('scoreDesc').textContent = desc;
+
+  const gName = document.getElementById('g-name').value || 'Groom';
+  const bName = document.getElementById('b-name').value || 'Bride';
+  document.getElementById('resultTitle').textContent = `${gName} ♥ ${bName} — பொருத்தம்`;
+
+  // Porutham grid
+  const grid = document.getElementById('poruthamGrid');
+  grid.innerHTML = results.map(r => `
+    <div class="porutham-item ${r.level || (r.pass ? 'pass' : 'fail')}">
+      <div class="p-icon">${r.icon}</div>
+      <div>
+        <div class="p-name">${r.name}</div>
+        <div class="p-result" style="color:${r.pass ? 'var(--good)' : 'var(--bad)'}">${r.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('resultWrap').style.display = 'block';
+  document.getElementById('resultWrap').scrollIntoView({ behavior:'smooth', block:'start' });
+
+  // GA4 event
+  gtag && gtag('event', 'compatibility_check', { guna_score: guna, pass_count: passCount });
+}
+
+function shareResult() {
+  const gName = document.getElementById('g-name').value || 'Groom';
+  const bName = document.getElementById('b-name').value || 'Bride';
+  const score = document.getElementById('scoreNum').textContent;
+  const text = `${gName} ♥ ${bName} — Kundali Match Score: ${score}/36\nCheck yours free at jathagam.app/compatibility`;
+  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show';
+  setTimeout(() => t.className = '', 3000);
+}
+
+buildSelects();
+</script>
+</body>
+</html>
