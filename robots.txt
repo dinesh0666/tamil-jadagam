@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jathagam.app/sitemap.xml
