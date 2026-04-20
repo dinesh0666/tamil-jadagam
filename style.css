@@ -1182,7 +1182,9 @@ a:focus-visible { border-radius: var(--radius); }
   grid-template-columns: repeat(7, 1fr);
   gap: 3px;
 }
-.pdc-empty { /* blank cells */ }
+.pdc-empty {
+  aspect-ratio: 1;
+}
 
 .panch-day-cell {
   aspect-ratio: 1;
