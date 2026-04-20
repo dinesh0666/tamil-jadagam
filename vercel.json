@@ -8,7 +8,18 @@
     { "source": "/birth-chart-telugu", "destination": "/blog/birth-chart-telugu.html" },
     { "source": "/janam-kundli-hindi", "destination": "/blog/janam-kundli-hindi.html" },
     { "source": "/rasi-chart-online",  "destination": "/blog/rasi-chart-online.html" },
-    { "source": "/chart",              "destination": "/chart.html" }
+    { "source": "/chart",              "destination": "/chart.html" },
+    { "source": "/nakshatra-compatibility", "destination": "/blog/nakshatra-compatibility.html" },
+    { "source": "/rahu-kalam-today",   "destination": "/blog/rahu-kalam-today.html" },
+    { "source": "/dasha-periods-guide","destination": "/blog/dasha-periods-guide.html" },
+    { "source": "/tamil-calendar-2026","destination": "/blog/tamil-calendar-2026.html" },
+    { "source": "/today-nakshatra",    "destination": "/blog/today-nakshatra.html" },
+    { "source": "/rasi-palan-2026",    "destination": "/blog/rasi-palan-2026.html" },
+    { "source": "/mangal-dosha",       "destination": "/blog/mangal-dosha.html" },
+    { "source": "/free-kundali",       "destination": "/blog/free-kundali.html" },
+    { "source": "/nalla-neram-today",  "destination": "/blog/nalla-neram-today.html" },
+    { "source": "/moon-sign-calculator","destination": "/blog/moon-sign-calculator.html" },
+    { "source": "/marriage-muhurta-2026","destination": "/blog/marriage-muhurta-2026.html" }
   ],
   "headers": [
     {

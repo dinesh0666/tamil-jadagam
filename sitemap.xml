@@ -9,72 +9,122 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/panchangam.html</loc>
+    <loc>https://jathagam.app/panchangam</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/compatibility.html</loc>
+    <loc>https://jathagam.app/compatibility</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/pricing.html</loc>
+    <loc>https://jathagam.app/pricing</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog pages -->
+  <!-- Original blog pages -->
   <url>
-    <loc>https://jathagam.app/blog/jathagam-tamil.html</loc>
+    <loc>https://jathagam.app/jathagam-tamil</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/tamil-jathagam-free.html</loc>
+    <loc>https://jathagam.app/tamil-jathagam-free</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/birth-chart-telugu.html</loc>
+    <loc>https://jathagam.app/birth-chart-telugu</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/janam-kundli-hindi.html</loc>
+    <loc>https://jathagam.app/janam-kundli-hindi</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/rasi-chart-online.html</loc>
+    <loc>https://jathagam.app/rasi-chart-online</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- New SEO blog pages -->
   <url>
-    <loc>https://jathagam.app/blog/nakshatra-compatibility.html</loc>
+    <loc>https://jathagam.app/nakshatra-compatibility</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/rahu-kalam-today.html</loc>
+    <loc>https://jathagam.app/rahu-kalam-today</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jathagam.app/blog/dasha-periods-guide.html</loc>
+    <loc>https://jathagam.app/dasha-periods-guide</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/tamil-calendar-2026</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/today-nakshatra</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/rasi-palan-2026</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/mangal-dosha</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/free-kundali</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/nalla-neram-today</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/moon-sign-calculator</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jathagam.app/marriage-muhurta-2026</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
