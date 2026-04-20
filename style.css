@@ -1179,14 +1179,18 @@ a:focus-visible { border-radius: var(--radius); }
 
 .panch-cal-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 3px;
+  overflow: hidden;
 }
 .pdc-empty {
   aspect-ratio: 1;
+  min-width: 0;
 }
 
 .panch-day-cell {
+  min-width: 0;
+  min-height: 0;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
@@ -1199,6 +1203,7 @@ a:focus-visible { border-radius: var(--radius); }
   padding: 2px;
   gap: 1px;
   user-select: none;
+  overflow: hidden;
 }
 .panch-day-cell:hover { background: var(--primary-l); border-color: var(--primary); }
 .panch-day-cell.today {
